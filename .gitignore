@@ -29,6 +29,10 @@ Obj/
 .vscode/
 wwwroot/
 
+AccountingBook/AccountingBook.Web/dist/
+AccountingBook/AccountingBook.Web/node_modules/
+AccountingBook/AccountingBook.Web/out-tsc/
+
 # Visual Studio 2015 cache/options directory
 .vs/
 /wwwroot/dist/
