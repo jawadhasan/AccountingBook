@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using AccountingBook.Core.Enums;
 
 namespace AccountingBook.Core.Financial
@@ -20,6 +18,7 @@ namespace AccountingBook.Core.Financial
         public string AccountName { get; protected set; }
         public int AccountCode { get; protected set; }
         public DrOrCrSide DrOrCrSide { get; protected set; }
+        public AccountType AccountType { get; set; }
 
         //FK to parent account
         public long? ParentAccountId { get; protected set; }
