@@ -26,6 +26,19 @@ namespace AccountingBook.Data
                 entity.Property(e => e.CompanyCode).IsRequired().HasMaxLength(5);
 
             });
+
+            #region seed-data
+
+            //Seed Company
+            var company = new Company("hexquote.com","hexquote", "C001");
+            company.Id = 1; //consider using negative values
+
+            modelBuilder.Entity<Company>()
+                .HasData(
+                    company
+                );
+
+            #endregion
             base.OnModelCreating(modelBuilder);
         }
     }
