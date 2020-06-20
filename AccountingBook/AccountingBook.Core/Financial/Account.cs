@@ -6,15 +6,12 @@ namespace AccountingBook.Core.Financial
     public class Account : EntityBase
     {
         //ctor
-        protected Account()
+        public Account()
         {
-            CompanyId = 1; //default for now
-            ChildAccounts = new HashSet<Account>();
-            //GeneralLedgerLines = new HashSet<GeneralLedgerLine>();
+            ChildAccounts = new List<Account>();
+            //GeneralLedgerLines = new List<GeneralLedgerLine>();
+
         }
-
-        //ctor
-
         public string AccountName { get; protected set; }
         public int AccountCode { get; protected set; }
         public DrOrCrSide DrOrCrSide { get; protected set; }
@@ -24,27 +21,27 @@ namespace AccountingBook.Core.Financial
         public long? ParentAccountId { get; protected set; }
         public virtual Account ParentAccount { get; protected set; }
 
-        //FK to company
-        public long CompanyId { get; protected set; }
-        public virtual Company Company { get; protected set; }
-
         //An Account can have child accounts
         public virtual ICollection<Account> ChildAccounts { get; set; }
 
-       
-        public void AddChildAccount(Account account)
+       public void AddChildAccount(Account account)
         {
             ChildAccounts.Add(account);
         }
-        public bool CanPost()
+       public bool CanPost()
         {
             return ChildAccounts == null || ChildAccounts.Count <= 0;
         }
 
-        //public virtual ICollection<GeneralLedgerLine> GeneralLedgerLines { get; set; }
 
-        //public decimal Balance => GetBalance();
-        //public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
-        //public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);
+
+
+
+
+
+       //public virtual ICollection<GeneralLedgerLine> GeneralLedgerLines { get; set; }
+       //public decimal Balance => GetBalance();
+       //public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
+       //public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);
     }
 }
