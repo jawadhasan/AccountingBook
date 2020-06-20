@@ -4,10 +4,11 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+ 
   <ItemGroup>
     <ProjectReference Include="..\AccountingBook.Data\AccountingBook.Data.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
