@@ -9,10 +9,12 @@ namespace AccountingBook.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Company> Companies { get; set; }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             //Setup mappings here
             modelBuilder.Entity<Company>(entity =>
             {
@@ -24,20 +26,7 @@ namespace AccountingBook.Data
                 entity.Property(e => e.CompanyCode).IsRequired().HasMaxLength(5);
 
             });
-
-
-            #region seed-data
-
-            //Seed Company
-            modelBuilder.Entity<Company>()
-                .HasData(
-                    new Company("hexquote.com", "hexquote", "hex01")
-                );
-
-            #endregion
-
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }
