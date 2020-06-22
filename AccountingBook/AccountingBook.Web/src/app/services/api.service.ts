@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  messages:any= [];
+  messages: any = [];
 
   constructor(private http: HttpClient) { }
 
@@ -16,5 +16,18 @@ export class ApiService {
       this.messages = res;
     });
   }
+
+  getCompanyData() {
+    return this.http.get('/api/company');
+  }
+
+  saveCompanyData(company) {
+    return this.http.post('/api/company', company).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.error(err);
+    })
+  }
+ 
 
 }

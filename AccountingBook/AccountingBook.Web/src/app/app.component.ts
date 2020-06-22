@@ -13,6 +13,6 @@ export class AppComponent {
   constructor(public apiService: ApiService){}
 
   ngOnInit(){
-    this.apiService.getData();
+   
   }
 }

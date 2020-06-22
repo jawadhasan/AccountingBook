@@ -2,7 +2,7 @@
 {
     public class Company : EntityBase
     {
-        protected Company()
+        public Company()
         {
         }
 
@@ -12,8 +12,8 @@
             ShortName = shortName;
             CompanyCode = companyCode;
         }
-        public string CompanyName { get; protected set; }
-        public string ShortName { get; protected set; }
-        public string CompanyCode { get; protected set; }
+        public string CompanyName { get; set; }
+        public string ShortName { get; set; }
+        public string CompanyCode { get; set; }
     }
 }
