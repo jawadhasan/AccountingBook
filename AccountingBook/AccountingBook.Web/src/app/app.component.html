@@ -1,6 +1,43 @@
+<div class="ui-g ui-g-nopad" id="header">
 
-<!-- <div *ngFor="let message of apiService.messages">
-    {{message}}
-</div> -->
-
-<router-outlet></router-outlet>
+    <div class="ui-g-10">
+      <!-- <img src="assets/img/logo-clear.svg" id="top-logo"/> -->
+      LOGO
+    </div>
+    <div class="ui-g-2" id="notifications">
+      
+    </div>
+  </div>
+  
+  <div class="ui-g ui-g-nopad">
+  
+    <div class="ui-g-2 ui-g-nopad" id="sidegutter">
+  
+      <div id="sidenav">
+  
+        <!-- <p-menu #bigMenu [model]="menuItems"></p-menu> -->
+        Menu place holder
+  
+      </div>
+  
+    </div>
+  
+    <div class="ui-g-2 ui-g-nopad" id="minigutter">
+  
+      <div id="sidenav-mini">
+  
+        <!-- <p-menu #smallMenu [model]="miniMenuItems"></p-menu> -->
+        small menu
+      </div>
+  
+    </div>
+  
+  
+  
+  
+    <div id="content-body" class="ui-g-10 ui-g-nopad">
+  
+      <router-outlet></router-outlet>
+  
+    </div>
+  </div>

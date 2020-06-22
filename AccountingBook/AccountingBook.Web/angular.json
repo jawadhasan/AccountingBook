@@ -24,6 +24,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeng/resources/themes/luna-blue/theme.css",
               "src/styles.css"
             ],
             "scripts": []
