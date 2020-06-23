@@ -10,15 +10,21 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
 import { CompanyComponent } from './company/company.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes = [
+  { path: "", redirectTo: "/dashboard", pathMatch: "full" },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyComponent
+    CompanyComponent,
+    StatisticsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
