@@ -5,3 +5,37 @@ body {
     margin: 0px;
     font-size: 1em !important;
   }
+  .ui-panel-titlebar {
+    background-color: #2F8EE5 !important;
+    color: white !important;
+  }
+  .ui-menu {
+    width: auto !important;
+    margin: 0px !important;
+    border: none !important;
+    background-color: #2D353C !important;
+  }
+
+  
+.ui-menu-list {
+  background-color: black;
+}
+
+.ui-menuitem-text {
+  color: white !important;
+}
+
+.ui-menuitem-icon {
+  color: white !important;
+  font-size: large !important;
+  margin-right: 1em;
+}
+
+body .ui-menu .ui-menuitem :hover {
+  background-color: #2F8EE5 !important;
+}
+
+.menu-selected {
+  background-color: #F15B2A !important;
+  color: #ffffff;
+}

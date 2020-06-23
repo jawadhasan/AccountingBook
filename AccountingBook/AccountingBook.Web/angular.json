@@ -25,11 +25,14 @@
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/primeng/resources/primeng.css",
-              "node_modules/primeng/resources/themes/luna-blue/theme.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js"
+            ]
           },
           "configurations": {
             "production": {

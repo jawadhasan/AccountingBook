@@ -1,8 +1,7 @@
 <div class="ui-g ui-g-nopad" id="header">
 
     <div class="ui-g-10">
-      <!-- <img src="assets/img/logo-clear.svg" id="top-logo"/> -->
-      LOGO
+      <h3>Accounting Book</h3>
     </div>
     <div class="ui-g-2" id="notifications">
       
@@ -13,11 +12,8 @@
   
     <div class="ui-g-2 ui-g-nopad" id="sidegutter">
   
-      <div id="sidenav">
-  
-        <!-- <p-menu #bigMenu [model]="menuItems"></p-menu> -->
-        Menu place holder
-  
+      <div id="sidenav">        
+        <p-menu #bigMenu [model]="menuItems"></p-menu> 
       </div>
   
     </div>
@@ -25,19 +21,12 @@
     <div class="ui-g-2 ui-g-nopad" id="minigutter">
   
       <div id="sidenav-mini">
-  
-        <!-- <p-menu #smallMenu [model]="miniMenuItems"></p-menu> -->
-        small menu
+        Small menu
       </div>
   
     </div>
-  
-  
-  
-  
-    <div id="content-body" class="ui-g-10 ui-g-nopad">
-  
-      <router-outlet></router-outlet>
-  
+
+    <div id="content-body" class="ui-g-10 ui-g-nopad"> 
+      <router-outlet></router-outlet>  
     </div>
   </div>
