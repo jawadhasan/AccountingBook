@@ -1,0 +1,22 @@
+<div>
+    <h3>Company Form</h3>
+  
+    <form >
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="company.companyName" required autofocus />
+      </div>
+      <div class="form-group">
+        <label>Short Name</label>
+        <input type="text" class="form-control" name="shortName" [(ngModel)]="company.shortName" required/>
+      </div>
+      <div class="form-group">
+        <label>Company Code</label>
+        <input type="text" class="form-control" name="code" [(ngModel)]="company.companyCode" required />
+      </div>
+
+      <button (click)="save()">Save</button>
+
+    </form>
+  
+  </div>

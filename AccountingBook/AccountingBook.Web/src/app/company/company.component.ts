@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'company',
@@ -10,17 +11,43 @@ export class CompanyComponent implements OnInit {
 
   company:any = {};
 
-   //injected the service
-   constructor(public apiService: ApiService){}
+  companyForm: FormGroup;
+
+   constructor(
+     private fb: FormBuilder,
+     public apiService: ApiService
+     ){}
    
-  ngOnInit(): void {
-    this.apiService.getCompanyData().subscribe(res=>{
+  ngOnInit(): void {  
+
+    ///We call group method on form-builder, which is where we call to construct a new group of fields.
+
+    this.companyForm = this.fb.group({
+      //first '' is default value, and second is an array of validation constraints
+      companyName: ['', [Validators.required]],
+      shortName: ['', [Validators.required]],
+      companyCode: ['', [Validators.required]]
+
+    });
+
+    //get data from server
+    this.apiService.getCompanyData().subscribe((res: any)=>{
       this.company = res;
+
+      
+
+      this.companyForm.patchValue({
+        companyName: res.companyName,
+        shortName: res.shortName,
+        companyCode: res.companyCode
+      });
+
     });
   }
 
   save(){
-    this.apiService.saveCompanyData(this.company);
+    console.log(this.companyForm.value);
+   this.apiService.saveCompanyData(this.companyForm.value);
   }
 
 }
