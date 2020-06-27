@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AccountingBook.Core;
+using AccountingBook.Core.Enums;
 using AccountingBook.Core.Financial;
 using Microsoft.EntityFrameworkCore;
 
@@ -64,6 +65,57 @@ namespace AccountingBook.Data
                 );
 
 
+            //Seed Parent-Accounts
+            var assetAccount = new Account
+            {
+                Id = 1,
+                AccountCode = 10000,
+                AccountName = "Assets",
+                AccountType = AccountType.Assets,
+                DrOrCrSide = DrOrCrSide.Dr
+            };
+            var liabilitiesAccount = new Account
+            {
+                Id = 2,
+                AccountCode = 20000,
+                AccountName = "Liabilities",
+                AccountType = AccountType.Liabilities,
+                DrOrCrSide = DrOrCrSide.Cr
+            };
+            var equitiesAccount = new Account
+            {
+                Id = 3,
+                AccountCode = 30000,
+                AccountName = "Equity",
+                AccountType = AccountType.Equity,
+                DrOrCrSide = DrOrCrSide.Cr
+            };
+            var revenueAccount = new Account
+            {
+                Id = 4,
+                AccountCode = 40000,
+                AccountName = "Revenue",
+                AccountType = AccountType.Revenue,
+                DrOrCrSide = DrOrCrSide.Cr
+            };
+            var expenseAccount = new Account
+            {
+                Id = 5,
+                AccountCode = 50000,
+                AccountName = "Expense",
+                AccountType = AccountType.Expense,
+                DrOrCrSide = DrOrCrSide.Dr
+            };
+
+
+            modelBuilder.Entity<Account>().HasData(
+                assetAccount,
+                liabilitiesAccount,
+                equitiesAccount,
+                revenueAccount,
+                expenseAccount
+
+            );
 
             #endregion
             base.OnModelCreating(modelBuilder);
