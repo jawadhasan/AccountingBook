@@ -12,14 +12,14 @@ namespace AccountingBook.Core.Financial
             //GeneralLedgerLines = new List<GeneralLedgerLine>();
 
         }
-        public string AccountName { get; protected set; }
-        public int AccountCode { get; protected set; }
-        public DrOrCrSide DrOrCrSide { get; protected set; }
+        public string AccountName { get; set; }
+        public int AccountCode { get; set; }
+        public DrOrCrSide DrOrCrSide { get; set; }
         public AccountType AccountType { get; set; }
 
         //FK to parent account
-        public long? ParentAccountId { get; protected set; }
-        public virtual Account ParentAccount { get; protected set; }
+        public long? ParentAccountId { get; set; }
+        public virtual Account ParentAccount { get; set; }
 
         //An Account can have child accounts
         public virtual ICollection<Account> ChildAccounts { get; set; }
@@ -32,16 +32,17 @@ namespace AccountingBook.Core.Financial
         {
             return ChildAccounts == null || ChildAccounts.Count <= 0;
         }
-
-
-
-
-
-
-
-       //public virtual ICollection<GeneralLedgerLine> GeneralLedgerLines { get; set; }
-       //public decimal Balance => GetBalance();
-       //public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
-       //public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);
     }
 }
+
+
+
+
+
+
+
+
+//public virtual ICollection<GeneralLedgerLine> GeneralLedgerLines { get; set; }
+//public decimal Balance => GetBalance();
+//public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
+//public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);

@@ -26,15 +26,14 @@ export class CompanyComponent implements OnInit {
       //first '' is default value, and second is an array of validation constraints
       companyName: ['', [Validators.required]],
       shortName: ['', [Validators.required]],
-      companyCode: ['', [Validators.required]]
+      companyCode: ['', 
+      [Validators.required], 
+      Validators.maxLength(5)]
 
     });
 
     //get data from server
     this.apiService.getCompanyData().subscribe((res: any)=>{
-      this.company = res;
-
-      
 
       this.companyForm.patchValue({
         companyName: res.companyName,
@@ -46,8 +45,13 @@ export class CompanyComponent implements OnInit {
   }
 
   save(){
-    console.log(this.companyForm.value);
+   console.log(this.companyForm.value);
    this.apiService.saveCompanyData(this.companyForm.value);
+  }
+
+  
+  hasFormErrors() {
+    return !this.companyForm.valid;
   }
 
 }

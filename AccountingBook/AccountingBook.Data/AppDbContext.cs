@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AccountingBook.Core;
+using AccountingBook.Core.Financial;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountingBook.Data
@@ -9,6 +10,8 @@ namespace AccountingBook.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -16,6 +19,8 @@ namespace AccountingBook.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Setup mappings here
+
+            //Company
             modelBuilder.Entity<Company>(entity =>
             {
                 entity.Property(e => e.CompanyName)
@@ -27,6 +32,26 @@ namespace AccountingBook.Data
 
             });
 
+            //Account
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.Property(e => e.AccountName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.AccountCode)
+                    .IsRequired()
+                    .HasMaxLength(5);
+
+                entity.Property(e => e.AccountType).IsRequired();
+                entity.Property(e => e.DrOrCrSide).IsRequired();
+
+            });
+
+
+
+
+
             #region seed-data
 
             //Seed Company
@@ -37,6 +62,8 @@ namespace AccountingBook.Data
                 .HasData(
                     company
                 );
+
+
 
             #endregion
             base.OnModelCreating(modelBuilder);
