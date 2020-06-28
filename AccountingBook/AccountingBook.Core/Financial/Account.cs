@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AccountingBook.Core.Enums;
 
 namespace AccountingBook.Core.Financial
@@ -9,8 +10,7 @@ namespace AccountingBook.Core.Financial
         public Account()
         {
             ChildAccounts = new List<Account>();
-            //GeneralLedgerLines = new List<GeneralLedgerLine>();
-
+            GeneralLedgerLines = new List<GeneralLedgerLine>();
         }
         public string AccountName { get; set; }
         public int AccountCode { get; set; }
@@ -23,8 +23,13 @@ namespace AccountingBook.Core.Financial
 
         //An Account can have child accounts
         public virtual ICollection<Account> ChildAccounts { get; set; }
+        public virtual ICollection<GeneralLedgerLine> GeneralLedgerLines { get; set; }
 
-       public void AddChildAccount(Account account)
+        public decimal Balance => GetBalance();
+        public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
+        public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);
+
+        public void AddChildAccount(Account account)
         {
             ChildAccounts.Add(account);
         }
@@ -32,6 +37,22 @@ namespace AccountingBook.Core.Financial
         {
             return ChildAccounts == null || ChildAccounts.Count <= 0;
         }
+
+       private decimal GetBalance()
+       {
+           var drAmount = GeneralLedgerLines.Where(l => l.DrCr == DrOrCrSide.Dr).Sum(l => l.Amount);
+           var crAmount = GeneralLedgerLines.Where(l => l.DrCr == DrOrCrSide.Cr).Sum(l => l.Amount);
+
+           var balance = DrOrCrSide == DrOrCrSide.Dr ? drAmount - crAmount : crAmount - drAmount;
+           return balance;
+       }
+
+       private decimal GetDebitCreditBalance(DrOrCrSide side)
+       {
+           return side == DrOrCrSide.Dr ?
+               GeneralLedgerLines.Where(l => l.DrCr == DrOrCrSide.Dr).Sum(l => l.Amount) :
+               GeneralLedgerLines.Where(l => l.DrCr == DrOrCrSide.Cr).Sum(l => l.Amount);
+       }
     }
 }
 
@@ -42,7 +63,6 @@ namespace AccountingBook.Core.Financial
 
 
 
-//public virtual ICollection<GeneralLedgerLine> GeneralLedgerLines { get; set; }
-//public decimal Balance => GetBalance();
+
 //public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
 //public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);

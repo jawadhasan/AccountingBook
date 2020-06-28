@@ -53,6 +53,10 @@ namespace AccountingBook.Data
 
                 entity.HasIndex(e=> e.AccountCode).IsUnique();
 
+                entity.Ignore(a => a.Balance);
+                entity.Ignore(a => a.DebitBalance);
+                entity.Ignore(a => a.CreditBalance);
+
             });
 
 
