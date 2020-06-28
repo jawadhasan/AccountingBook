@@ -3,15 +3,17 @@ using System;
 using AccountingBook.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AccountingBook.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200628123134_JournalEntities")]
+    partial class JournalEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -375,52 +377,6 @@ namespace AccountingBook.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AccountingBook.Core.Financial.GeneralLedgerHeader", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GeneralLedgerHeaders");
-                });
-
-            modelBuilder.Entity("AccountingBook.Core.Financial.GeneralLedgerLine", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("DrCr")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("GeneralLedgerHeaderId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("GeneralLedgerHeaderId");
-
-                    b.ToTable("GeneralLedgerLines");
-                });
-
             modelBuilder.Entity("AccountingBook.Core.Financial.JournalEntryHeader", b =>
                 {
                     b.Property<long>("Id")
@@ -481,21 +437,6 @@ namespace AccountingBook.Data.Migrations
                     b.HasOne("AccountingBook.Core.Financial.Account", "ParentAccount")
                         .WithMany("ChildAccounts")
                         .HasForeignKey("ParentAccountId");
-                });
-
-            modelBuilder.Entity("AccountingBook.Core.Financial.GeneralLedgerLine", b =>
-                {
-                    b.HasOne("AccountingBook.Core.Financial.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AccountingBook.Core.Financial.GeneralLedgerHeader", "GeneralLedgerHeader")
-                        .WithMany("GeneralLedgerLines")
-                        .HasForeignKey("GeneralLedgerHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("AccountingBook.Core.Financial.JournalEntryLine", b =>

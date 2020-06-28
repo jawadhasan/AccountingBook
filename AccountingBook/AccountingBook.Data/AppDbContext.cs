@@ -12,6 +12,10 @@ namespace AccountingBook.Data
     {
         public DbSet<Company> Companies { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<JournalEntryHeader> JournalEntryHeaders { get; set; }
+        public DbSet<JournalEntryLine> JournalEntryLines { get; set; }
+        public DbSet<GeneralLedgerHeader> GeneralLedgerHeaders { get; set; }
+        public DbSet<GeneralLedgerLine> GeneralLedgerLines { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

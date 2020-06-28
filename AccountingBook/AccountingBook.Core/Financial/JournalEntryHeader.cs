@@ -15,6 +15,11 @@ namespace AccountingBook.Core.Financial
         public string Memo { get; set; }
         public bool Posted { get; set; }
 
-        public virtual ICollection<JournalEntryLine> JournalEntryLines { get; set; }
+       public virtual ICollection<JournalEntryLine> JournalEntryLines { get; set; }
+
     }
+
+    ////FK to Ledger
+    //public int? GeneralLedgerHeaderId { get; set; }
+    //public virtual GeneralLedgerHeader GeneralLedgerHeader { get; set; }
 }

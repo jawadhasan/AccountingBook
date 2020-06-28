@@ -65,5 +65,22 @@ namespace AccountingBook.Core.Financial
             return isEqual;
         }
 
+        public bool DrCrEqualityValidated()
+        {
+            var totalDebit = GeneralLedgerLines.Where(d => d.DrCr == DrOrCrSide.Dr).Sum(d => d.Amount);
+            var totalCredit = GeneralLedgerLines.Where(d => d.DrCr == DrOrCrSide.Cr).Sum(d => d.Amount);
+            return totalDebit - totalCredit == 0;
+        }
+        public bool NoLineAmountIsEqualToZero()
+        {
+            var totalDebit = GeneralLedgerLines.Where(d => d.DrCr == DrOrCrSide.Dr).Sum(d => d.Amount);
+            var totalCredit = GeneralLedgerLines.Where(d => d.DrCr == DrOrCrSide.Cr).Sum(d => d.Amount);
+
+            if (totalDebit == 0)
+                return false;
+
+            return totalCredit != 0;
+        }
+
     }
 }
