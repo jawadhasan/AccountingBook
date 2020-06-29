@@ -12,11 +12,13 @@ import { AppComponent } from './app.component';
 import { CompanyComponent } from './company/company.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { JournalComponent } from './journal/journal.component';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'company', component: CompanyComponent }
+  { path: 'company', component: CompanyComponent },
+  { path: 'journal', component: JournalComponent }
 ]
 
 @NgModule({
@@ -24,7 +26,8 @@ const routes = [
     AppComponent,
     CompanyComponent,
     StatisticsComponent,
-    DashboardComponent
+    DashboardComponent,
+    JournalComponent
   ],
   imports: [
     BrowserModule,
