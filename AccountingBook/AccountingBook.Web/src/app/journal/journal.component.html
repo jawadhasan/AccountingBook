@@ -35,18 +35,49 @@
     </ng-template>
   </p-table>
 
-  <p-dialog [(visible)]="display" modal="true">
+  <p-dialog [(visible)]="display" modal="true" [style]="{width: '50vw'}">
+    
     <p-header>
       Add New Journal Entry
     </p-header>
-      Journal Entry controls placeholder
+
+    <form [formGroup]="companyForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm" class="ui-g">
+   <div  class="ui-g-12">
+
+    <div class="ui-g">
+      <label for="date" class="ui-g-12 ui-md-2">Date*</label>
+      <input  type="text" pInputText class="ui-g-12 ui-md-5" name="date" formControlName="date" required />
+      <div class="ui-g-12 ui-md-5">
+        <!-- for error message -->
+      </div>
+    </div>
+    <div class="ui-g">
+      <label for="referenceNo" class="ui-g-12 ui-md-2">Reference No*</label>
+      <input  type="text" pInputText class="ui-g-12 ui-md-5" name="referenceNo" formControlName="referenceNo" required />
+      <div class="ui-g-12 ui-md-5">
+        <!-- for error message -->
+      </div>
+    </div>
+    <div class="ui-g">
+      <label for="memo" class="ui-g-12 ui-md-2">Memo</label>
+      <input type="text" pInputText class="ui-g-12 ui-md-5" name="memo" formControlName="memo" required maxlength="5" />
+      <div class="ui-g-12 ui-md-5">
+        <!-- for error message -->
+      </div>
+    </div>
+
+    <!-- <button pButton  type="submit" [disabled]="hasFormErrors()" label="Save" icon="fa fa-floppy-o"></button> -->
+  </div>
+    </form>
 
     <p-footer>
       
       <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
       icon="fa fa-times"></button>
 
-      <button type="button" (click)="saveEntry()" class="pull-right ui-button-primary" pButton label="Save"
+      <button type="button" (click)="documentEditForm.ngSubmit.emit()"
+[disabled]="!documentEditForm.form.valid"
+      class="pull-right ui-button-primary" pButton label="Save"
       icon="fa fa-floppy-o"></button>
       
     </p-footer>

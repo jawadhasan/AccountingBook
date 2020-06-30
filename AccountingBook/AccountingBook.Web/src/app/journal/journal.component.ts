@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'journal',
@@ -8,18 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class JournalComponent implements OnInit {
 
   display: boolean = false;
-  journalEntry: any = {};
-  constructor() { }
+  companyForm: FormGroup;
 
-  closeDialog(){
-    this.display = false;
-  }
-  saveEntry(){
-    console.log('TODO: save');
-  }
-  showDialog() {
-    this.display = true;
-  }
+  constructor(private fb: FormBuilder) { }
+
+
+
 
   journalEntries: any = [
     { id: 1, date: '2020-02-13', debit: 13000, credit: 13000, readyForPosting: true, posted: true },
@@ -28,6 +23,23 @@ export class JournalComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+
+    this.companyForm = this.fb.group({
+      date: ['', [Validators.required]],
+      referenceNo : ['', [Validators.required]],
+      memo: ['', [Validators.maxLength(1000)]]
+    });
+  }
+
+
+  closeDialog() {
+    this.display = false;
+  }
+  saveEntry() {
+    console.log('TODO: save');
+  }
+  showDialog() {
+    this.display = true;
   }
 
 }

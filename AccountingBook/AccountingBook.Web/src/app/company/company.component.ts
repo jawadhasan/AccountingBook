@@ -26,9 +26,7 @@ export class CompanyComponent implements OnInit {
       //first '' is default value, and second is an array of validation constraints
       companyName: ['', [Validators.required]],
       shortName: ['', [Validators.required]],
-      companyCode: ['', 
-      [Validators.required], 
-      Validators.maxLength(5)]
+      companyCode: ['', [Validators.required, Validators.maxLength(5)]]
 
     });
 
