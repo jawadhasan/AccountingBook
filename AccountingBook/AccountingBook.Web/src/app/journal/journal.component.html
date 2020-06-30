@@ -1,18 +1,56 @@
 <div class="journalEntries ui-g">
 
-    <div class="header ui-g-12">
-  
-      <h2>Journal Entries</h2>   
-  
-    </div>  
-  
+  <div class="header ui-g-12">
+
+    <h2>Journal Entries</h2>
+
+    <button type="button" (click)="showDialog()" class="pull-right ui-button-success" pButton label="Add New"
+      icon="fa fa-plus"></button>
+
+
   </div>
 
+  <p-table [value]="journalEntries">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>date</th>
+        <th>debit</th>
+        <th pSortableColumn="credit">credit <p-sortIcon field="credit"></p-sortIcon>
+        </th>
+        <th>ReadyForPosting</th>
+        <th>Posted</th>
+      </tr>
 
+    </ng-template>
+    <ng-template pTemplate="body" let-entry>
+      <tr>
+        <td>{{entry.id}}</td>
+        <td>{{entry.date}}</td>
+        <td>{{entry.debit}}</td>
+        <td>{{entry.credit}}</td>
+        <td>{{entry.readyForPosting}}</td>
+        <td>{{entry.posted}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
+  <p-dialog [(visible)]="display" modal="true">
+    <p-header>
+      Add New Journal Entry
+    </p-header>
+      Journal Entry controls placeholder
 
-  
+    <p-footer>
+      
+      <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
+      icon="fa fa-times"></button>
 
+      <button type="button" (click)="saveEntry()" class="pull-right ui-button-primary" pButton label="Save"
+      icon="fa fa-floppy-o"></button>
+      
+    </p-footer>
 
+  </p-dialog>
 
-
+</div>
