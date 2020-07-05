@@ -15,5 +15,12 @@
     font-size: xx-large;
     display: inline;
   }
+
+  th{
+    border-bottom: 1px solid black;
+  }
+  th, td {
+    text-align: center;
+  }
   
   

@@ -35,51 +35,115 @@
     </ng-template>
   </p-table>
 
-  <p-dialog [(visible)]="display" modal="true" [style]="{width: '50vw'}">
-    
+  <p-dialog [(visible)]="display" modal="true" [style]="{width: '80vw'}" [contentStyle]="{minHeight: '70vh'}">
+
     <p-header>
       Add New Journal Entry
     </p-header>
 
-    <form [formGroup]="companyForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm" class="ui-g">
-   <div  class="ui-g-12">
+    <form [formGroup]="JournalEntryForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm" class="ui-g">
+      <div class="ui-g-12">
 
-    <div class="ui-g">
-      <label for="date" class="ui-g-12 ui-md-2">Date*</label>
-      <input  type="text" pInputText class="ui-g-12 ui-md-5" name="date" formControlName="date" required />
-      <div class="ui-g-12 ui-md-5">
-        <!-- for error message -->
-      </div>
-    </div>
-    <div class="ui-g">
-      <label for="referenceNo" class="ui-g-12 ui-md-2">Reference No*</label>
-      <input  type="text" pInputText class="ui-g-12 ui-md-5" name="referenceNo" formControlName="referenceNo" required />
-      <div class="ui-g-12 ui-md-5">
-        <!-- for error message -->
-      </div>
-    </div>
-    <div class="ui-g">
-      <label for="memo" class="ui-g-12 ui-md-2">Memo</label>
-      <input type="text" pInputText class="ui-g-12 ui-md-5" name="memo" formControlName="memo" required maxlength="5" />
-      <div class="ui-g-12 ui-md-5">
-        <!-- for error message -->
-      </div>
-    </div>
+        <!-- Date -->
+        <div class="ui-g">
+          <label for="date" class="ui-g-12 ui-md-2">Date*</label>
+          <!-- <input  type="text" pInputText class="ui-g-12 ui-md-5" name="date" formControlName="date" required /> -->
 
-    <!-- <button pButton  type="submit" [disabled]="hasFormErrors()" label="Save" icon="fa fa-floppy-o"></button> -->
-  </div>
+          <p-calendar [showIcon]="true" formControlName="date" class="ui-g-12 ui-md-5" required></p-calendar>
+          <div class="ui-g-12 ui-md-5">
+            <!-- for error message -->
+          </div>
+        </div>
+
+        <!-- RefNo -->
+        <div class="ui-g">
+          <label for="referenceNo" class="ui-g-12 ui-md-2">Ref. No*</label>
+          <input type="text" pInputText class="ui-g-12 ui-md-5" name="referenceNo" formControlName="referenceNo"
+            required />
+          <div class="ui-g-12 ui-md-5">
+            <!-- for error message -->
+          </div>
+        </div>
+
+        <!-- Memo -->
+        <div class="ui-g">
+          <label for="memo" class="ui-g-12 ui-md-2">Memo</label>
+          <input type="text" pInputText class="ui-g-12 ui-md-5" name="memo" formControlName="memo" required
+           />
+          <div class="ui-g-12 ui-md-5">
+            <!-- for error message -->
+          </div>
+        </div>
+
+        <!-- Posted -->
+        <div class="ui-g">
+          <label for="Posted" class="ui-g-12 ui-md-2">Posted</label>
+          <p-checkbox [formControl]="JournalEntryForm.controls['posted']" [binary]="true" [readonly]="true">
+          </p-checkbox>
+          <div class="ui-g-12 ui-md-5">
+            <!-- for error message -->
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Button AddLine -->
+        <button pButton label="Add Line" icon="fa fa-plus"></button>
+
+        <!-- Lines -->
+        <div class="ui-g">
+
+          <table style="width:100%">
+            <tr>
+              <th>Account</th>
+              <th>Dr/Cr</th>
+              <th>Amount</th>
+              <th>Memo</th>
+              <th>Actions</th>
+            </tr>
+
+            <tr>
+              <!-- Account DropDown -->
+              <td>
+                <p-dropdown [options]="accounts" formControlName="selectedAccount" optionLabel="name"></p-dropdown>
+              </td>
+
+              <!-- Dr/Cr DropDown -->
+              <td>
+                <p-dropdown [options]="drcr" formControlName="selectedDrCr" optionLabel="name"></p-dropdown>
+              </td>
+
+              <!-- Amount Field -->
+              <td>
+                <p-inputNumber formControlName="lineAmount" mode="decimal" [minFractionDigits]="2"></p-inputNumber>
+              </td>
+
+              <!-- Memo Field -->
+              <td><input type="text" pInputText name="lineMemo" formControlName="lineMemo" /></td>
+
+              <!-- Actions -->
+              <td></td>
+
+            </tr>
+
+          </table>
+
+        </div>
+
+
+
+        <!-- <button pButton  type="submit" [disabled]="hasFormErrors()" label="Save" icon="fa fa-floppy-o"></button> -->
+      </div>
     </form>
 
     <p-footer>
-      
-      <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
-      icon="fa fa-times"></button>
 
-      <button type="button" (click)="documentEditForm.ngSubmit.emit()"
-[disabled]="!documentEditForm.form.valid"
-      class="pull-right ui-button-primary" pButton label="Save"
-      icon="fa fa-floppy-o"></button>
-      
+      <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
+        icon="fa fa-times"></button>
+
+      <button type="button" (click)="documentEditForm.ngSubmit.emit()" [disabled]="!documentEditForm.form.valid"
+        class="pull-right ui-button-primary" pButton label="Save" icon="fa fa-floppy-o"></button>
+
     </p-footer>
 
   </p-dialog>
