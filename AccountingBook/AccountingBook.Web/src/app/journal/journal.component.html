@@ -68,8 +68,7 @@
         <!-- Memo -->
         <div class="ui-g">
           <label for="memo" class="ui-g-12 ui-md-2">Memo</label>
-          <input type="text" pInputText class="ui-g-12 ui-md-5" name="memo" formControlName="memo" required
-           />
+          <input type="text" pInputText class="ui-g-12 ui-md-5" name="memo" formControlName="memo" required />
           <div class="ui-g-12 ui-md-5">
             <!-- for error message -->
           </div>
@@ -88,7 +87,7 @@
         <hr>
 
         <!-- Button AddLine -->
-        <button pButton label="Add Line" icon="fa fa-plus"></button>
+        <button pButton label="Add Line" (click)="addLine()" [disabled]="!lines.valid" icon="fa fa-plus"></button>
 
         <!-- Lines -->
         <div class="ui-g">
@@ -102,29 +101,34 @@
               <th>Actions</th>
             </tr>
 
-            <tr>
-              <!-- Account DropDown -->
-              <td>
-                <p-dropdown [options]="accounts" formControlName="selectedAccount" optionLabel="name"></p-dropdown>
-              </td>
+            <tbody formArrayName="lines"
+            *ngFor="let line of lines.controls; let i = index">
 
-              <!-- Dr/Cr DropDown -->
-              <td>
-                <p-dropdown [options]="drcr" formControlName="selectedDrCr" optionLabel="name"></p-dropdown>
-              </td>
+              <tr [formGroupName]="i">
+                <!-- Account DropDown -->
+                <td>
+                  <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="selectedAccount" optionLabel="name"></p-dropdown>
+                </td>
 
-              <!-- Amount Field -->
-              <td>
-                <p-inputNumber formControlName="lineAmount" mode="decimal" [minFractionDigits]="2"></p-inputNumber>
-              </td>
+                <!-- Dr/Cr DropDown -->
+                <td>
+                  <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="selectedDrCr" optionLabel="name"></p-dropdown>
+                </td>
 
-              <!-- Memo Field -->
-              <td><input type="text" pInputText name="lineMemo" formControlName="lineMemo" /></td>
+                <!-- Amount Field -->
+                <td>
+                  <p-inputNumber id="{{ 'amountId' + i}}" formControlName="lineAmount" mode="decimal" [minFractionDigits]="2"></p-inputNumber>
+                </td>
 
-              <!-- Actions -->
-              <td></td>
+                <!-- Memo Field -->
+                <td><input id="{{ 'memoId' + i}}" type="text" pInputText name="lineMemo" formControlName="lineMemo" /></td>
 
-            </tr>
+                <!-- Actions -->
+                <td><button id="{{ 'deleteButtonId' + i}}" pButton [disabled]="true" icon="fa fa-times"></button></td>
+
+              </tr>
+
+            </tbody>
 
           </table>
 

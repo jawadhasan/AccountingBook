@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'journal',
@@ -10,6 +10,11 @@ export class JournalComponent implements OnInit {
 
   display: boolean = false;
   JournalEntryForm: FormGroup;
+
+  //get-only property
+  get lines(): FormArray{
+    return <FormArray> this.JournalEntryForm.get("lines")
+  }
 
   accounts:any = [
     { id: 1, name: 'Account-1' },
@@ -40,11 +45,23 @@ export class JournalComponent implements OnInit {
       posted : false,
       memo: ['', [Validators.maxLength(1000)]],
 
+      lines: this.fb.array([ this.buildLine() ]) 
+     
+    });
+  }
+
+
+  addLine():void{
+    this.lines.push(this.buildLine());
+  }
+
+  buildLine():FormGroup{
+    return  this.fb.group({
       selectedAccount:'',
       selectedDrCr:'',
       lineAmount: 1,
       lineMemo:''
-    });
+    })
   }
 
 
