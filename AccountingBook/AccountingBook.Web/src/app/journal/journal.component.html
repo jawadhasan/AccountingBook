@@ -1,155 +1,148 @@
 <div class="journalEntries ui-g">
 
   <div class="header ui-g-12">
-
     <h2>Journal Entries</h2>
 
-    <button type="button" (click)="showDialog()" class="pull-right ui-button-success" pButton label="Add New"
+    <button type="button" (click)="showAddDialog()" class="pull-right ui-button-success" pButton label="Add New"
       icon="fa fa-plus"></button>
-
-
   </div>
 
   <p-table [value]="journalEntries">
     <ng-template pTemplate="header">
       <tr>
-        <th>Id</th>
-        <th>date</th>
-        <th>debit</th>
-        <th pSortableColumn="credit">credit <p-sortIcon field="credit"></p-sortIcon>
-        </th>
-        <th>ReadyForPosting</th>
+        <!-- <th>Id</th> -->
+        <th>Date</th>
+        <th>Debit</th>
+        <th pSortableColumn="credit">Credit <p-sortIcon field="credit"></p-sortIcon></th>
+        <th>Ready For Posting</th>
         <th>Posted</th>
+        <th>Action</th>
       </tr>
-
     </ng-template>
+
     <ng-template pTemplate="body" let-entry>
       <tr>
-        <td>{{entry.id}}</td>
         <td>{{entry.date}}</td>
         <td>{{entry.debit}}</td>
         <td>{{entry.credit}}</td>
-        <td>{{entry.readyForPosting}}</td>
-        <td>{{entry.posted}}</td>
+        <!-- <td>{{entry.posted}}</td> -->
+        <td><p-checkbox [(ngModel)]="entry.readyForPosting" [binary]="true" [readonly]="true"> </p-checkbox></td>
+        <td> <p-checkbox [(ngModel)]="entry.posted" [binary]="true" [readonly]="true"> </p-checkbox></td>
+        <td>
+          <button id="{{ 'editJournalBtn' + entry.id}}" (click)="editEntry(entry.id)" pButton [disabled]="false" icon="fa fa-file-text-o" class="ui-button-secondary"></button>&nbsp;
+          <button id="{{ 'deleteJournalBtn' + entry.id}}" (click)="deleteEntry(entry.id)" pButton [disabled]="entry.posted" icon="fa fa-times" class="ui-button-danger"></button>&nbsp;
+          <button id="{{ 'postJournalBtn' + entry.id}}" (click)="postEntry(entry.id)" pButton [disabled]="entry.posted || !entry.readyForPosting" icon="fa fa-chevron-right " class="ui-button-success"></button>
+
+        </td>
+
       </tr>
     </ng-template>
   </p-table>
 
-  <p-dialog [(visible)]="display" modal="true" [style]="{width: '80vw'}" [contentStyle]="{minHeight: '70vh'}">
-
-    <p-header>
-      Add New Journal Entry
-    </p-header>
-
-    <form [formGroup]="JournalEntryForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm" class="ui-g">
-      <div class="ui-g-12">
-
-        <!-- Date -->
-        <div class="ui-g">
-          <label for="date" class="ui-g-12 ui-md-2">Date*</label>
-          <!-- <input  type="text" pInputText class="ui-g-12 ui-md-5" name="date" formControlName="date" required /> -->
-
-          <p-calendar [showIcon]="true" formControlName="date" class="ui-g-12 ui-md-5" required></p-calendar>
-          <div class="ui-g-12 ui-md-5">
-            <!-- for error message -->
-          </div>
-        </div>
-
-        <!-- RefNo -->
-        <div class="ui-g">
-          <label for="referenceNo" class="ui-g-12 ui-md-2">Ref. No*</label>
-          <input type="text" pInputText class="ui-g-12 ui-md-5" name="referenceNo" formControlName="referenceNo"
-            required />
-          <div class="ui-g-12 ui-md-5">
-            <!-- for error message -->
-          </div>
-        </div>
-
-        <!-- Memo -->
-        <div class="ui-g">
-          <label for="memo" class="ui-g-12 ui-md-2">Memo</label>
-          <input type="text" pInputText class="ui-g-12 ui-md-5" name="memo" formControlName="memo" required />
-          <div class="ui-g-12 ui-md-5">
-            <!-- for error message -->
-          </div>
-        </div>
-
-        <!-- Posted -->
-        <div class="ui-g">
-          <label for="Posted" class="ui-g-12 ui-md-2">Posted</label>
-          <p-checkbox [formControl]="JournalEntryForm.controls['posted']" [binary]="true" [readonly]="true">
-          </p-checkbox>
-          <div class="ui-g-12 ui-md-5">
-            <!-- for error message -->
-          </div>
-        </div>
-
-        <hr>
-
-        <!-- Button AddLine -->
-        <button pButton label="Add Line" (click)="addLine()" [disabled]="!lines.valid" icon="fa fa-plus"></button>
-
-        <!-- Lines -->
-        <div class="ui-g">
-
-          <table style="width:100%">
-            <tr>
-              <th>Account</th>
-              <th>Dr/Cr</th>
-              <th>Amount</th>
-              <th>Memo</th>
-              <th>Actions</th>
-            </tr>
-
-            <tbody formArrayName="lines"
-            *ngFor="let line of lines.controls; let i = index">
-
-              <tr [formGroupName]="i">
-                <!-- Account DropDown -->
-                <td>
-                  <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="selectedAccount" optionLabel="name"></p-dropdown>
-                </td>
-
-                <!-- Dr/Cr DropDown -->
-                <td>
-                  <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="selectedDrCr" optionLabel="name"></p-dropdown>
-                </td>
-
-                <!-- Amount Field -->
-                <td>
-                  <p-inputNumber id="{{ 'amountId' + i}}" formControlName="lineAmount" mode="decimal" [minFractionDigits]="2"></p-inputNumber>
-                </td>
-
-                <!-- Memo Field -->
-                <td><input id="{{ 'memoId' + i}}" type="text" pInputText name="lineMemo" formControlName="lineMemo" /></td>
-
-                <!-- Actions -->
-                <td><button id="{{ 'deleteButtonId' + i}}" pButton [disabled]="true" icon="fa fa-times"></button></td>
-
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-
-
-        <!-- <button pButton  type="submit" [disabled]="hasFormErrors()" label="Save" icon="fa fa-floppy-o"></button> -->
-      </div>
-    </form>
-
-    <p-footer>
-
-      <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
-        icon="fa fa-times"></button>
-
-      <button type="button" (click)="documentEditForm.ngSubmit.emit()" [disabled]="!documentEditForm.form.valid"
-        class="pull-right ui-button-primary" pButton label="Save" icon="fa fa-floppy-o"></button>
-
-    </p-footer>
-
-  </p-dialog>
-
 </div>
+
+
+<p-dialog [(visible)]="display" modal="true" [contentStyle]="{minHeight: '70vh'}">
+
+  <p-header>{{dialogTitle}}</p-header>
+
+  <form [formGroup]="JournalEntryForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm">
+    
+    <!-- Master -->
+    <div class="ui-fluid">
+
+      <!-- Date -->
+      <div class="p-field p-grid">
+        <label for="date" class="p-col-12 p-md-2">Date*</label>
+        <div class="p-col-12 p-md-10">
+          <p-calendar [showIcon]="true" formControlName="date" required></p-calendar>
+        </div>
+      </div>
+
+      <!-- RefNo -->
+      <div class="p-field p-grid">
+        <label for="referenceNo" class="p-col-12 p-md-2">Ref. No*</label>
+        <div class="p-col-12 p-md-10">
+          <input type="text" pInputText formControlName="referenceNo" required  />
+        </div>
+      </div>
+
+      <!-- Memo -->
+      <div class="p-field p-grid">
+        <label for="memo" class="p-col-12 p-md-2">Memo</label>
+        <div class="p-col-12 p-md-10">
+          <input type="text" pInputText formControlName="memo" required />
+        </div>
+      </div>
+
+      <!-- Posted -->
+      <!-- <div class="ui-g">
+          <label for="Posted" class="ui-g-3">Posted</label>
+          <p-checkbox class="ui-g-9" [formControl]="JournalEntryForm.controls['posted']" [binary]="true"
+            [readonly]="true"> </p-checkbox>
+        </div> -->
+
+    </div>
+
+    <hr>
+    <h3>Lines</h3>
+    <table >
+      <tr>
+        <th>Account</th>
+        <th>Dr/Cr</th>
+        <th>Amount</th>
+        <th>Memo</th>
+        <th></th>
+      </tr>
+
+      <tbody formArrayName="lines" *ngFor="let line of lines.controls; let i = index">
+
+        <tr [formGroupName]="i">
+          <!-- Account DropDown -->
+          <td>
+            <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="selectedAccount"
+              optionLabel="name"></p-dropdown>
+          </td>
+
+          <!-- Dr/Cr DropDown -->
+          <td>
+            <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="selectedDrCr" optionLabel="name">
+            </p-dropdown>
+          </td>
+
+          <!-- Amount Field -->
+          <td>
+            <p-inputNumber id="{{ 'amountId' + i}}" formControlName="lineAmount" mode="decimal" [minFractionDigits]="2">
+            </p-inputNumber>
+          </td>
+
+          <!-- Memo Field -->
+          <td><input id="{{ 'memoId' + i}}" type="text" pInputText name="lineMemo" formControlName="lineMemo" /></td>
+
+          <!-- Actions -->
+          <td><button id="{{ 'deleteButtonId' + i}}" (click)="deleteLine(i)" pButton [disabled]="false" icon="fa fa-times" class="ui-button-danger"></button></td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </form>
+
+  <p-footer>
+
+    <!-- Button AddLine -->
+    <button pButton class="pull-left ui-button-success" label="Add Line" (click)="addLine()" [disabled]="!lines.valid"
+      icon="fa fa-plus"></button>
+
+
+    <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
+      icon="fa fa-times"></button>
+
+    <button type="button" (click)="documentEditForm.ngSubmit.emit()" [disabled]="!documentEditForm.form.valid"
+      class="pull-right ui-button-primary" pButton label="Save" icon="fa fa-floppy-o"></button>
+
+  </p-footer>
+
+</p-dialog>

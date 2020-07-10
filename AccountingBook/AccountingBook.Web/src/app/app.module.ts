@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule} from 'primeng';
+import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule} from 'primeng';
 
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -41,6 +41,7 @@ const routes = [
     InputTextModule,
     InputNumberModule,
     ButtonModule,
+    FieldsetModule,
     TableModule,
     DialogModule,
     CalendarModule,
