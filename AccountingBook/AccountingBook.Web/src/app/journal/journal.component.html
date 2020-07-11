@@ -10,8 +10,9 @@
   <p-table [value]="journalEntries">
     <ng-template pTemplate="header">
       <tr>
-        <!-- <th>Id</th> -->
+        <!-- <th>Id</th> -->        
         <th>Date</th>
+        <th>Ref No</th>
         <th>Debit</th>
         <th pSortableColumn="credit">Credit <p-sortIcon field="credit"></p-sortIcon></th>
         <th>Ready For Posting</th>
@@ -22,7 +23,8 @@
 
     <ng-template pTemplate="body" let-entry>
       <tr>
-        <td>{{entry.date}}</td>
+        <td>{{entry.date | date: 'dd.MM.yyyy'}}</td>
+        <td>{{entry.referenceNo}}</td>
         <td>{{entry.debit}}</td>
         <td>{{entry.credit}}</td>
         <!-- <td>{{entry.posted}}</td> -->
@@ -51,6 +53,14 @@
     <!-- Master -->
     <div class="ui-fluid">
 
+            <!-- Id -->
+            <div class="p-field p-grid">
+              <label for="date" class="p-col-12 p-md-2">Id</label>
+              <div class="p-col-12 p-md-10">
+                <input type="number" readonly formControlName="id" />
+              </div>
+            </div>
+
       <!-- Date -->
       <div class="p-field p-grid">
         <label for="date" class="p-col-12 p-md-2">Date*</label>
@@ -67,13 +77,7 @@
         </div>
       </div>
 
-      <!-- Memo -->
-      <div class="p-field p-grid">
-        <label for="memo" class="p-col-12 p-md-2">Memo</label>
-        <div class="p-col-12 p-md-10">
-          <input type="text" pInputText formControlName="memo" required />
-        </div>
-      </div>
+    
 
       <!-- Posted -->
       <!-- <div class="ui-g">
@@ -100,13 +104,13 @@
         <tr [formGroupName]="i">
           <!-- Account DropDown -->
           <td>
-            <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="selectedAccount"
+            <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId"
               optionLabel="name"></p-dropdown>
           </td>
 
           <!-- Dr/Cr DropDown -->
           <td>
-            <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="selectedDrCr" optionLabel="name">
+            <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId" optionLabel="name">
             </p-dropdown>
           </td>
 
