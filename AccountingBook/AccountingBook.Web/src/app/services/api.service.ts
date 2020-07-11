@@ -28,6 +28,27 @@ export class ApiService {
       console.error(err);
     })
   }
+
+
+  getPostingAccounts(){
+    return this.http.get('/api/lookup/postingAccounts');
+  }
+
+  getJournalEntries(){
+    return this.http.get('/api/journal');
+  }
+
+  
+
+  saveJournal(journal) {
+    return this.http.post('/api/journal/saveJournal', journal);
+  }
+
+
+  deleteJournal(id) {
+    return this.http.delete('/api/journal/'+id);
+  }
+  
  
 
 }

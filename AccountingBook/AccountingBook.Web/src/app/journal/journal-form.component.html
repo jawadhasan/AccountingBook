@@ -44,28 +44,28 @@
 
                     <tr [formGroupName]="i">
                         <!-- Account DropDown -->
-                        <td>
-                            <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId"
+                        <td style="width: 40%;">
+                            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId"
                                 optionLabel="name" >
                             </p-dropdown>
                         </td>
 
                         <!-- Dr/Cr DropDown -->
-                        <td>
-                            <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId"
+                        <td>   
+                            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId"
                                 optionLabel="name">
                             </p-dropdown>
                         </td>
 
                         <!-- Amount Field -->
                         <td>
-                            <p-inputNumber id="{{ 'amountId' + i}}" formControlName="lineAmount" mode="decimal">
+                            <p-inputNumber autoWidth="false" [style]="{'width':'100%'}" id="{{ 'amountId' + i}}" formControlName="amount" mode="decimal">
                             </p-inputNumber>
                         </td>
 
                         <!-- Memo Field -->
-                        <td><input id="{{ 'memoId' + i}}" type="text" pInputText name="lineMemo"
-                                formControlName="lineMemo" /></td>
+                        <td><input autoWidth="false" [style]="{'width':'100%'}" id="{{ 'memoId' + i}}" type="text" pInputText name="memo"
+                                formControlName="memo" /></td>
 
                         <!-- Actions -->
                         <td><button id="{{ 'deleteButtonId' + i}}" (click)="deleteLine(i)" pButton [disabled]="false"

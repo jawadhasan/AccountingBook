@@ -10,6 +10,6 @@ export interface Journal {
     id: number;
     accountId: number,
     drCrId: number,
-    lineAmount: number,
-    lineMemo: string
+    amount: number,
+    memo: string
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'journal',
@@ -8,15 +9,28 @@ import { Router } from '@angular/router';
 })
 export class JournalComponent implements OnInit {
 
-  journalEntries = [
-    { id: 1, date: new Date('2020-02-13'), referenceNo:'Ref1', debit: 13000, credit: 13000, readyForPosting: true, posted: true },
-    { id: 2, date: new Date('2020-02-13'),referenceNo:'Ref2', debit: 12000, credit: 11000, readyForPosting: false, posted: false },
-    { id: 3, date: new Date('2020-02-13'),referenceNo:'Ref3', debit: 5000, credit: 5000, readyForPosting: true, posted: false }
-  ]
+  journalEntries:any=[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public apiService: ApiService) { }
 
   ngOnInit(): void {  
+
+    // this.journalEntries = [
+    //   { id: 1, date: new Date('2020-02-13'), referenceNo:'Ref1', debit: 13000, credit: 13000, readyForPosting: true, posted: true },
+    //   { id: 2, date: new Date('2020-02-13'),referenceNo:'Ref2', debit: 12000, credit: 11000, readyForPosting: false, posted: false },
+    //   { id: 3, date: new Date('2020-02-13'),referenceNo:'Ref3', debit: 5000, credit: 5000, readyForPosting: true, posted: false }
+    // ]
+
+  //get data from server
+  this.apiService.getJournalEntries().subscribe((res: any)=>{
+    console.log(res);
+    this.journalEntries = res;
+  });
+
+
+
+
+
   }
 
   addForm() {
@@ -27,8 +41,13 @@ export class JournalComponent implements OnInit {
     this.router.navigate(['/journal', index]);
   }
 
-  deleteEntry(index: number) {
-    console.log('delete journal', index);
+  deleteEntry(id: number) {
+    console.log('delete id', id);
+    this.apiService.deleteJournal(id).subscribe((res: any)=>{      
+      //TODO: refresh from server
+      let index = this.journalEntries.findIndex(x => x.id === id);
+      this.journalEntries.splice(index, 1);
+    });
   }
 
   postEntry(index: number) {

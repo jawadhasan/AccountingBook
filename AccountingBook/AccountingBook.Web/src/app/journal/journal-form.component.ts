@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { JournalLine, Journal } from '../models/journal';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'journal-form',
@@ -22,12 +23,7 @@ export class JournalFormComponent implements OnInit {
   };
   JournalEntryForm: FormGroup;
 
-  accounts: any = [
-    { id: 1, name: 'Account-1' },
-    { id: 2, name: 'Account-2' },
-    { id: 3, name: 'Account-3' },
-    { id: 4, name: 'Account-4' }
-  ]
+  accounts: any=[];
 
   drcr: any = [
     { id: 1, name: 'Debit' },
@@ -40,7 +36,7 @@ export class JournalFormComponent implements OnInit {
   }
 
   constructor(private router: Router,
-    private route: ActivatedRoute, private fb: FormBuilder) { }
+    private route: ActivatedRoute, private fb: FormBuilder,public apiService: ApiService) { }
 
   ngOnInit(): void {
   
@@ -49,8 +45,15 @@ export class JournalFormComponent implements OnInit {
       date: [this.journalEntry.date, [Validators.required]],
       referenceNo: [this.journalEntry.referenceNo],
       posted: this.journalEntry.posted,
-      lines: this.fb.array([this.buildLine()])
+      lines: this.fb.array([])
+
+      // lines: this.fb.array([this.buildLine()])
     })
+
+        //get data from server
+        this.apiService.getPostingAccounts().subscribe((res: any)=>{
+          this.accounts = res;
+        });
 
     const id = this.route.snapshot.params['id'];
     if (id !== '0') {
@@ -76,8 +79,11 @@ export class JournalFormComponent implements OnInit {
   }
 
   saveEntry() {
-    // const p = { ...this.journalEntry, ...this.JournalEntryForm.value };
+   // const p = { ...this.journalEntry, ...this.JournalEntryForm.value };
 
+   const p = {... this.JournalEntryForm.value};
+
+    console.log(this.JournalEntryForm.value);
     //header mapping
     this.journalEntry.id = this.JournalEntryForm.value.id;
     this.journalEntry.date = this.JournalEntryForm.value.date;
@@ -90,8 +96,8 @@ export class JournalFormComponent implements OnInit {
         id: 0,//temp value
         accountId: l.accountId.id,
         drCrId: l.drcrId.id,
-        lineAmount: l.lineAmount,
-        lineMemo: l.lineMemo
+        amount: l.amount,
+        memo: l.memo
 
       };
 
@@ -99,9 +105,16 @@ export class JournalFormComponent implements OnInit {
     });
 
     console.log('dataToSave', this.journalEntry);
-    console.log('TODO: AJAX CALL');
-    this.operationText = 'Journal Saved!';
-   // this.backToList();
+
+    this.apiService.saveJournal(this.journalEntry).subscribe(res => {
+      console.log(res);
+      this.backToList();
+    }, err => {
+      console.error(err);
+      this.operationText = err.error;
+      this.journalEntry.lines.splice(0, this.journalEntry.lines.length);
+    })  
+  
   }
 
 
@@ -130,8 +143,8 @@ export class JournalFormComponent implements OnInit {
       id:0,
       accountId: [this.accounts[0]],
       drcrId: [this.drcr[0]],
-      lineAmount: 1,
-      lineMemo: ''
+      amount: 1,
+      memo: ''
     })
   }
 

@@ -6,10 +6,12 @@
     overflow-y:scroll;
     position:relative;
 }
+
+/* table { table-layout: fixed; } */
+
 table{
     width: 100%;
 }
-
 th{
     border-bottom: 1px solid black;
     background-color: teal;
