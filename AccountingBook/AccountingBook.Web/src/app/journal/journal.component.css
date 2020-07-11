@@ -26,8 +26,18 @@
     background-color: teal;
     color: white;
   }
-  th, td {
+  th{
     text-align: center;
   }
+
+  .scrollableContent
+  {
+      height:50vh;     
+      background-color:#ccc;		
+      overflow-y:scroll;
+      position:relative;
+  }
+
+
   
   

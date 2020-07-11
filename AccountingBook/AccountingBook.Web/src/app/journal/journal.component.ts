@@ -1,23 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-
-
-export interface Journal {
-  id: number;
-  date: Date;
-  referenceNo: string; 
-  readyForPosting: boolean,
-  posted: boolean,
-  lines?: JournalLine[];
-}
-
-export interface JournalLine {
-  id: number;
-  accountId: number,
-  drCrId: number,
-  lineAmount: number,
-  lineMemo: string
-}
+import { Journal, JournalLine } from '../models/journal';
 
 @Component({
   selector: 'journal',
@@ -130,7 +113,7 @@ export class JournalComponent implements OnInit {
 
   saveEntry() {
     // const p = { ...this.journalEntry, ...this.JournalEntryForm.value };
-    console.log(this.JournalEntryForm.value);
+    //console.log(this.JournalEntryForm.value);
 
     //header mapping
     this.journalEntry.id = this.JournalEntryForm.value.id;
