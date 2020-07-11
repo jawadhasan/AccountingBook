@@ -1,0 +1,19 @@
+
+.scrollableContent
+{
+    height:50vh;     
+    /* background-color:#ccc;		 */
+    overflow-y:scroll;
+    position:relative;
+}
+table{
+    width: 100%;
+}
+
+th{
+    border-bottom: 1px solid black;
+    background-color: teal;
+    color: white;
+    text-align: center;
+  }
+

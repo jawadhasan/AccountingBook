@@ -3,8 +3,10 @@
   <div class="header ui-g-12">
     <h2>Journal Entries</h2>
 
-    <button type="button" (click)="showAddDialog()" class="pull-right ui-button-success" pButton label="Add New"
+    <button type="button" (click)="addForm()" class="pull-right ui-button-success" pButton label="Add New"
       icon="fa fa-plus"></button>
+
+
   </div>
 
   <p-table [value]="journalEntries">
@@ -28,6 +30,7 @@
         <td>{{entry.referenceNo}}</td>
         <td>{{entry.debit | number}}</td>
         <td>{{entry.credit | number}}</td>
+        <!-- <td>{{entry.posted}}</td> -->
         <td>
           <p-checkbox [(ngModel)]="entry.readyForPosting" [binary]="true" [readonly]="true"> </p-checkbox>
         </td>
@@ -35,7 +38,7 @@
           <p-checkbox [(ngModel)]="entry.posted" [binary]="true" [readonly]="true"> </p-checkbox>
         </td>
         <td>
-          <button id="{{ 'editJournalBtn' + entry.id}}" (click)="editEntry(entry.id)" pButton [disabled]="false"
+          <button id="{{ 'editJournalBtn' + entry.id}}" (click)="editForm(entry.id)" pButton [disabled]="false"
             icon="fa fa-file-text-o" class="ui-button-secondary"></button>&nbsp;
           <button id="{{ 'deleteJournalBtn' + entry.id}}" (click)="deleteEntry(entry.id)" pButton
             [disabled]="entry.posted" icon="fa fa-times" class="ui-button-danger"></button>&nbsp;
@@ -51,112 +54,3 @@
 
 </div>
 
-
-<p-dialog [(visible)]="display" modal="true" [contentStyle]="{ minHeight: '70vh'}" [baseZIndex]="10000">
-
-  <p-header>{{dialogTitle}}</p-header>
-
-  <form [formGroup]="JournalEntryForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm">
-
-    <!-- Master --> 
-    <div class="ui-fluid">
-
-      <!-- Id -->
-      <!-- <div class="p-field p-grid">
-        <label for="date" class="p-col-12 p-md-2">Id</label>
-        <div class="p-col-12 p-md-10">
-          <input type="number" readonly formControlName="id" />
-        </div>
-      </div> -->
-
-      <!-- Date -->
-      <div class="p-field p-grid">
-        <label for="date" class="p-col-12 p-md-2">Date*</label>
-        <div class="p-col-12 p-md-10">
-          <p-calendar [showIcon]="true" formControlName="date" required></p-calendar>
-        </div>
-      </div>
-
-      <!-- RefNo -->
-      <div class="p-field p-grid">
-        <label for="referenceNo" class="p-col-12 p-md-2">Ref. No*</label>
-        <div class="p-col-12 p-md-10">
-          <input type="text" pInputText formControlName="referenceNo" required />
-        </div>
-      </div>
-
-
-
-      <!-- Posted -->
-      <!-- <div class="ui-g">
-          <label for="Posted" class="ui-g-3">Posted</label>
-          <p-checkbox class="ui-g-9" [formControl]="JournalEntryForm.controls['posted']" [binary]="true"
-            [readonly]="true"> </p-checkbox>
-        </div> -->
-
-    </div>
- 
-    <hr>
-    
-    <div class="scrollableContent">
-      <table>       
-        <tr>
-          <th>Account</th>
-          <th>Dr/Cr</th>
-          <th>Amount</th>
-          <th>Memo</th>
-          <th></th>
-        </tr>
-
-        <tbody formArrayName="lines" *ngFor="let line of lines.controls; let i = index">
-
-          <tr [formGroupName]="i">
-            <!-- Account DropDown -->
-            <td>
-              <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId" optionLabel="name">
-              </p-dropdown>
-            </td>
-
-            <!-- Dr/Cr DropDown -->
-            <td>
-              <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId" optionLabel="name">
-              </p-dropdown>
-            </td>
-
-            <!-- Amount Field -->
-            <td>
-              <p-inputNumber id="{{ 'amountId' + i}}" formControlName="lineAmount" mode="decimal">
-              </p-inputNumber>
-            </td>
-
-            <!-- Memo Field -->
-            <td><input id="{{ 'memoId' + i}}" type="text" pInputText name="lineMemo" formControlName="lineMemo" /></td>
-
-            <!-- Actions -->
-            <td><button id="{{ 'deleteButtonId' + i}}" (click)="deleteLine(i)" pButton [disabled]="false"
-                icon="fa fa-times" class="ui-button-danger"></button></td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-    </div>
-  </form>
-
-  <p-footer>
-
-    <!-- Button AddLine -->
-    <button pButton class="pull-left ui-button-success" label="Add Line" (click)="addLine()" [disabled]="!lines.valid"
-      icon="fa fa-plus"></button>
-
-
-    <button type="button" (click)="closeDialog()" class="pull-right ui-button-secondary" pButton label="Close"
-      icon="fa fa-times"></button>
-
-    <button type="button" (click)="documentEditForm.ngSubmit.emit()" [disabled]="!documentEditForm.form.valid"
-      class="pull-right ui-button-primary" pButton label="Save" icon="fa fa-floppy-o"></button>
-
-  </p-footer>
-
-</p-dialog>

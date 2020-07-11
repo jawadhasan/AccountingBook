@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule} from 'primeng';
+import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule} from 'primeng';
 
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -13,12 +13,14 @@ import { CompanyComponent } from './company/company.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JournalComponent } from './journal/journal.component';
+import { JournalFormComponent } from './journal/journal-form.component';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
-  { path: 'journal', component: JournalComponent }
+  { path: 'journal', component: JournalComponent },
+  {path: 'journal/:id', component: JournalFormComponent}
 ]
 
 @NgModule({
@@ -27,7 +29,9 @@ const routes = [
     CompanyComponent,
     StatisticsComponent,
     DashboardComponent,
-    JournalComponent
+    JournalComponent,
+    JournalFormComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -37,6 +41,7 @@ const routes = [
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     PanelModule,
+    CardModule,
     MenuModule,
     InputTextModule,
     InputNumberModule,

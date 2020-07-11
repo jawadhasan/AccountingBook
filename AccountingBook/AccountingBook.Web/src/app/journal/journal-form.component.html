@@ -1,0 +1,95 @@
+<p-panel>
+
+    <p-header>
+        <span class="ui-panel-title">Journal - {{operationText}}</span>
+    </p-header>
+
+    <form [formGroup]="JournalEntryForm" (ngSubmit)="saveEntry()" #documentEditForm="ngForm">
+
+        <!-- Master -->
+        <div class="ui-fluid">
+
+            <!-- Date -->
+            <div class="p-field p-grid">
+                <label for="date" class="p-col-12 p-md-2">Date*</label>
+                <div class="p-col-12 p-md-10">
+                    <p-calendar [showIcon]="true" formControlName="date" required></p-calendar>
+                </div>
+            </div>
+
+            <!-- RefNo -->
+            <div class="p-field p-grid">
+                <label for="referenceNo" class="p-col-12 p-md-2">Ref. No*</label>
+                <div class="p-col-12 p-md-10">
+                    <input type="text" pInputText formControlName="referenceNo" required />
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <!-- Details -->
+        <div class="scrollableContent">
+            <table>
+                <tr>
+                    <th>Account</th>
+                    <th>Dr/Cr</th>
+                    <th>Amount</th>
+                    <th>Memo</th>
+                    <th></th>
+                </tr>
+
+                <tbody formArrayName="lines" *ngFor="let line of lines.controls; let i = index">
+
+                    <tr [formGroupName]="i">
+                        <!-- Account DropDown -->
+                        <td>
+                            <p-dropdown id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId"
+                                optionLabel="name" >
+                            </p-dropdown>
+                        </td>
+
+                        <!-- Dr/Cr DropDown -->
+                        <td>
+                            <p-dropdown id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId"
+                                optionLabel="name">
+                            </p-dropdown>
+                        </td>
+
+                        <!-- Amount Field -->
+                        <td>
+                            <p-inputNumber id="{{ 'amountId' + i}}" formControlName="lineAmount" mode="decimal">
+                            </p-inputNumber>
+                        </td>
+
+                        <!-- Memo Field -->
+                        <td><input id="{{ 'memoId' + i}}" type="text" pInputText name="lineMemo"
+                                formControlName="lineMemo" /></td>
+
+                        <!-- Actions -->
+                        <td><button id="{{ 'deleteButtonId' + i}}" (click)="deleteLine(i)" pButton [disabled]="false"
+                                icon="fa fa-times" class="ui-button-danger"></button></td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+
+    </form>
+
+    <p-footer>
+        <button pButton type="button" (click)="addLine()" icon="pi pi-plus" label="New" class="ui-button-success"
+            style="margin-right: .25em" [disabled]="!lines.valid"></button>
+
+        <button pButton type="button" (click)="backToList()" class="pull-right ui-button-secondary" label="List"
+            icon="fa fa-times"></button>
+
+        <button pButton type="button" (click)="documentEditForm.ngSubmit.emit()" class="pull-right ui-button-primary"
+            label="Save" icon="fa fa-floppy-o" [disabled]="!documentEditForm.form.valid"></button>
+    </p-footer>
+
+</p-panel>
