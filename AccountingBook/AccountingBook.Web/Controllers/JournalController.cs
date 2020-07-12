@@ -45,6 +45,8 @@ namespace AccountingBook.Web.Controllers
         .ToListAsync();
       
       var journalEntryDtosList = new List<JournalEntryHeaderDto>();
+
+      //mapping from db entity to Dto
       foreach (var je in journalEntries)
       {
         var journalEntryDto = new JournalEntryHeaderDto()
@@ -81,10 +83,8 @@ namespace AccountingBook.Web.Controllers
 
         journalEntryDtosList.Add(journalEntryDto);
       }
-
-
-
-      //now prepare a simple model
+      
+      //now prepare a simple model for grid
 
       var entries = new List<JournalEntryDto>();
       foreach (var item in journalEntryDtosList)
@@ -103,10 +103,6 @@ namespace AccountingBook.Web.Controllers
 
         entries.Add(entry);
       }
-
-
-
-
   
       return Ok(entries);
     }
@@ -124,7 +120,7 @@ namespace AccountingBook.Web.Controllers
           .FirstOrDefaultAsync(c => c.Id == id);
 
 
-        //Mapping
+        //Mapping FROM database entity to Dto
 
         var dto = new JournalEntryHeaderDto();
         dto.Id = result.Id;
@@ -154,7 +150,6 @@ namespace AccountingBook.Web.Controllers
         return BadRequest(e.Message);
       }
     }
-
 
 
     [HttpPost]

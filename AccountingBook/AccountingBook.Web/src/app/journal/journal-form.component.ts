@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { JournalLine, Journal } from '../models/journal';
+import { Journal } from '../models/journal';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
@@ -73,7 +73,6 @@ export class JournalFormComponent implements OnInit {
 
   getJournal(id: number) {
     console.log('loading journal: ', id);
-    let that = this;
 
     this.apiService.getJournal(id).subscribe((res: any) => {
 
@@ -83,7 +82,7 @@ export class JournalFormComponent implements OnInit {
       //update data-model
       this.journalEntry = res;
 
-      console.log('loaded journal:',this.journalEntry);
+      console.log('loaded journal:', this.journalEntry);
 
       //update form-model
       this.JournalEntryForm.patchValue({
@@ -94,7 +93,7 @@ export class JournalFormComponent implements OnInit {
       });
 
       //lines mapping
-      this.journalEntry.lines.map(l => {       
+      this.journalEntry.lines.map(l => {
         this.addGroupLine(l);
       });
 
@@ -148,8 +147,9 @@ export class JournalFormComponent implements OnInit {
     }
     this.lines.markAsDirty();
   }
-  ///////////////////////////
 
+
+  //Helper Methods
 
   private addGroupLine(line) {
     this.lines.push(this.buildGroupLineFromLine(line))

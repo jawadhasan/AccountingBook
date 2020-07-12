@@ -23,13 +23,9 @@ export class JournalComponent implements OnInit {
 
   //get data from server
   this.apiService.getJournalEntries().subscribe((res: any)=>{
-    console.log(res);
+    console.log('journal entries: ',res);
     this.journalEntries = res;
   });
-
-
-
-
 
   }
 
@@ -42,7 +38,7 @@ export class JournalComponent implements OnInit {
   }
 
   deleteEntry(id: number) {
-    console.log('delete id', id);
+    console.log('delete journal-id', id);
     this.apiService.deleteJournal(id).subscribe((res: any)=>{      
       //TODO: refresh from server
       let index = this.journalEntries.findIndex(x => x.id === id);
@@ -51,10 +47,7 @@ export class JournalComponent implements OnInit {
   }
 
   postEntry(index: number) {
-    console.log('post journal', index);
-  }
-
-
- 
+    console.log('TODO: post journal', index);
+  } 
 
 }
