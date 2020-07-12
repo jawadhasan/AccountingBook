@@ -38,7 +38,9 @@ export class ApiService {
     return this.http.get('/api/journal');
   }
 
-  
+  getJournal(id: number) {
+    return this.http.get('/api/journal/'+id);    
+  }
 
   saveJournal(journal) {
     return this.http.post('/api/journal/saveJournal', journal);

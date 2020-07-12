@@ -45,16 +45,27 @@
                     <tr [formGroupName]="i">
                         <!-- Account DropDown -->
                         <td style="width: 40%;">
-                            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId"
+                            <!-- <p-dropdown autoWidth="false" [style]="{'width':'100%'}" id="{{ 'accountId' + i}}" [options]="accounts" formControlName="accountId"
                                 optionLabel="name" >
-                            </p-dropdown>
+                            </p-dropdown> -->
+
+                            <select class="ui-inputtext ui-corner-all ui-state-default ui-widget ui-state-filled" style="width: 100%;" formControlName = "accountId">
+                                <option *ngFor="let item of accounts" [ngValue]="item.id">
+                                    {{item.name}}
+                                </option>
+                            </select>
                         </td>
 
                         <!-- Dr/Cr DropDown -->
-                        <td>   
-                            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId"
+                        <td style="width: 20%">   
+                            <!-- <p-dropdown autoWidth="false" [style]="{'width':'100%'}" id="{{ 'drcrId' + i}}" [options]="drcr" formControlName="drcrId"
                                 optionLabel="name">
-                            </p-dropdown>
+                            </p-dropdown> -->
+                            <select class="ui-inputtext ui-corner-all ui-state-default ui-widget ui-state-filled" style="width: 100%;" formControlName = "drCrId">
+                                <option *ngFor="let item of drcr" [ngValue]="item.id">
+                                    {{item.name}}
+                                </option>
+                            </select>
                         </td>
 
                         <!-- Amount Field -->
@@ -91,5 +102,10 @@
         <button pButton type="button" (click)="documentEditForm.ngSubmit.emit()" class="pull-right ui-button-primary"
             label="Save" icon="fa fa-floppy-o" [disabled]="!documentEditForm.form.valid"></button>
     </p-footer>
+
+<!-- <pre>
+    {{JournalEntryForm.value | json}}
+</pre> -->
+
 
 </p-panel>

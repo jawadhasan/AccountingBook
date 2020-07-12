@@ -13,18 +13,11 @@ export class JournalFormComponent implements OnInit {
 
   operationText = 'Insert';
 
-  journalEntry: Journal = {
-    id: 0,
-    date: new Date(),
-    referenceNo: 'default ref',
-    posted: false,
-    readyForPosting: false,
-    lines: []
-  };
+  journalEntry: Journal;
   JournalEntryForm: FormGroup;
 
-  accounts: any=[];
-
+  //drop-downs
+  accounts: any = [];
   drcr: any = [
     { id: 1, name: 'Debit' },
     { id: 2, name: 'Credit' }
@@ -35,86 +28,95 @@ export class JournalFormComponent implements OnInit {
     return <FormArray>this.JournalEntryForm.get("lines")
   }
 
-  constructor(private router: Router,
-    private route: ActivatedRoute, private fb: FormBuilder,public apiService: ApiService) { }
+  constructor(private router: Router, private route: ActivatedRoute,
+    private fb: FormBuilder,
+    public apiService: ApiService) { }
 
   ngOnInit(): void {
-  
+
+    //data-model
+    this.journalEntry = {
+      id: 0,
+      date: new Date(),
+      referenceNo: '',
+      posted: false,
+      readyForPosting: false,
+      lines: []
+    };
+
+    //form-model
     this.JournalEntryForm = this.fb.group({
       id: 0,
       date: [this.journalEntry.date, [Validators.required]],
       referenceNo: [this.journalEntry.referenceNo],
       posted: this.journalEntry.posted,
       lines: this.fb.array([])
-
-      // lines: this.fb.array([this.buildLine()])
+      //lines: this.fb.array([this.buildLine()])
     })
 
-        //get data from server
-        this.apiService.getPostingAccounts().subscribe((res: any)=>{
-          this.accounts = res;
-        });
-
     const id = this.route.snapshot.params['id'];
-    if (id !== '0') {
-      this.operationText = 'Update';
-      this.getJournal(id);
-    }
+
+    //get accounts-data from server
+    this.apiService.getPostingAccounts().subscribe((res: any) => {
+      this.accounts = res;
+
+      if (id !== '0') {
+        this.operationText = 'Update';
+        console.log('idcalling');
+        this.getJournal(id);
+      }
+    });
+
+
 
   }
 
-  getJournal(id: string) {
-    // this.companyServie.getCompany(id)
-    //   .subscribe((data: Envelop<ICompany>) => {
-    //       this.company = data.result;
-    //     },
-    //   (err: any) => console.log(err),
-    //     () => console.log(this.company)
-    //     );
-    console.log(id);
+  getJournal(id: number) {
+    console.log('loading journal: ', id);
+    let that = this;
+
+    this.apiService.getJournal(id).subscribe((res: any) => {
+
+      if (this.JournalEntryForm) {
+        this.JournalEntryForm.reset();
+      }
+      //update data-model
+      this.journalEntry = res;
+
+      console.log('loaded journal:',this.journalEntry);
+
+      //update form-model
+      this.JournalEntryForm.patchValue({
+        id: res.id,
+        date: new Date(res.date),
+        referenceNo: res.referenceNo,
+        posted: res.posted
+      });
+
+      //lines mapping
+      this.journalEntry.lines.map(l => {       
+        this.addGroupLine(l);
+      });
+
+    });
+
   }
 
-  backToList() {   
+  backToList() {
     this.router.navigate(['/journal']);
   }
 
   saveEntry() {
-   // const p = { ...this.journalEntry, ...this.JournalEntryForm.value };
 
-   const p = {... this.JournalEntryForm.value};
+    console.log('dataToSafe: ', this.JournalEntryForm.value)
 
-    console.log(this.JournalEntryForm.value);
-    //header mapping
-    this.journalEntry.id = this.JournalEntryForm.value.id;
-    this.journalEntry.date = this.JournalEntryForm.value.date;
-    this.journalEntry.referenceNo = this.JournalEntryForm.value.referenceNo;
-
-    //lines mapping
-    this.JournalEntryForm.value.lines.map(l => {
-
-      const line: JournalLine = {
-        id: 0,//temp value
-        accountId: l.accountId.id,
-        drCrId: l.drcrId.id,
-        amount: l.amount,
-        memo: l.memo
-
-      };
-
-      this.journalEntry.lines.push(line);
-    });
-
-    console.log('dataToSave', this.journalEntry);
-
-    this.apiService.saveJournal(this.journalEntry).subscribe(res => {
-      console.log(res);
+    this.apiService.saveJournal(this.JournalEntryForm.value).subscribe(res => {
       this.backToList();
     }, err => {
       console.error(err);
       this.operationText = err.error;
-      this.journalEntry.lines.splice(0, this.journalEntry.lines.length);
-    })  
-  
+    })
+
   }
 
 
@@ -123,54 +125,46 @@ export class JournalFormComponent implements OnInit {
   addLine(): void {
     this.lines.push(this.buildLine());
   }
+
+  private buildLine(): FormGroup {
+    return this.fb.group({
+      id: 0,
+      accountId: this.accounts[0].id,
+      drCrId: this.drcr[0].id,
+      amount: 1,
+      memo: ''
+    })
+  }
+
   deleteLine(index: number): void {
-    console.log(index);
 
     if (this.lines.length == 1) {
-      //we want to keep one-line atleast all the time.
       this.lines.clear();
-      this.addLine();
+      //if we want to keep one-line atleast all the time.
+      //this.addLine();
 
     } else {
       this.lines.removeAt(index);
     }
     this.lines.markAsDirty();
   }
-  private buildLine(): FormGroup {
+  ///////////////////////////
+
+
+  private addGroupLine(line) {
+    this.lines.push(this.buildGroupLineFromLine(line))
+  }
+  private buildGroupLineFromLine(line): FormGroup {
     return this.fb.group({
-      // accountId: '',
-      // drcrId: [{'id':0, 'name':'Select Type'}],
-      id:0,
-      accountId: [this.accounts[0]],
-      drcrId: [this.drcr[0]],
-      amount: 1,
-      memo: ''
+      id: line.id,
+      accountId: line.accountId,
+      drCrId: line.drCrId,
+      amount: line.amount,
+      memo: line.memo
     })
   }
 
-   //Private (not in use)
 
-   private resetForm(): void {
-
-    this.JournalEntryForm.reset();
-    this.resetLines();
-
-    //initialize  
-    this.JournalEntryForm.patchValue({
-      date: new Date(),
-      id: 0,
-      posted: false
-
-    });
-
-
-  }
-
-  private resetLines(): void {
-    //we want to keep one-line atleast all the time.
-    this.lines.clear();
-    this.addLine();
-  }
 
 
 }

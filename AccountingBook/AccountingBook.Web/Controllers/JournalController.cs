@@ -111,7 +111,52 @@ namespace AccountingBook.Web.Controllers
       return Ok(entries);
     }
 
-    
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+      try
+      {
+        var result = await _db.JournalEntryHeaders
+          .Include(je => je.JournalEntryLines)
+          .ThenInclude(c => c.Account)
+          .Include(je => je.GeneralLedgerHeader)
+          .FirstOrDefaultAsync(c => c.Id == id);
+
+
+        //Mapping
+
+        var dto = new JournalEntryHeaderDto();
+        dto.Id = result.Id;
+        dto.Date = result.Date;
+        dto.ReferenceNo = result.ReferenceNo;
+        dto.Memo = result.Memo;
+        dto.Posted = result.Posted;
+
+        //lines
+        foreach (var lineItem in result.JournalEntryLines)
+        {
+          var line = new JournalEntryLineDto();
+          line.AccountId = lineItem.AccountId;
+          line.DrCrId = (int) lineItem.DrCr;
+          line.Amount = lineItem.Amount;
+          line.Memo = lineItem.Memo;
+
+          //add to master
+          dto.Lines.Add(line);
+        }
+
+
+        return Ok(dto);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
+
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> SaveJournal([FromBody] JournalEntryHeaderDto journalEntryDto)
@@ -121,10 +166,35 @@ namespace AccountingBook.Web.Controllers
       if (anyDuplicate)
         return BadRequest("One or more journal entry lines has duplicate account.");
 
+      var isNew = journalEntryDto.Id == 0;
+      JournalEntryHeader journalEntry = null;
 
+      if (isNew)
+      {
+        //inserting
+        journalEntry = new JournalEntryHeader();
+      }
+      else
+      {
+        //editing
+        journalEntry = await _db.JournalEntryHeaders
+          .Where(j => j.Id == journalEntryDto.Id)
+          .Include(j => j.JournalEntryLines)
+          .FirstOrDefaultAsync();
+
+        //get all oldLines
+        var oldLines = await _db.JournalEntryLines
+          .Where(l => l.JournalEntryHeaderId == journalEntryDto.Id)
+          .ToListAsync();
+
+        //Remove these lines
+        _db.JournalEntryLines.RemoveRange(oldLines);
+
+        //Save to db
+        await _db.SaveChangesAsync();
+      }
+      
       //mapping - master
-      JournalEntryHeader journalEntry = new JournalEntryHeader();
-
       journalEntry.Date = journalEntryDto.Date;
       journalEntry.ReferenceNo = journalEntryDto.ReferenceNo;
       journalEntry.Memo = journalEntryDto.Memo;
@@ -132,22 +202,29 @@ namespace AccountingBook.Web.Controllers
       //lines
       foreach (var line in journalEntryDto.Lines)
       {
-          var journalLine = new JournalEntryLine
-          {
-            AccountId = line.AccountId,
-            DrCr = (DrOrCrSide)line.DrCrId,
-            Amount = line.Amount,
-            Memo = line.Memo
-          };
-          journalEntry.JournalEntryLines.Add(journalLine);
+
+        var journalLine = new JournalEntryLine
+        {
+          AccountId = line.AccountId,
+          DrCr = (DrOrCrSide)line.DrCrId,
+          Amount = line.Amount,
+          Memo = line.Memo
+        };
+        journalEntry.JournalEntryLines.Add(journalLine);
       }
 
+      //save to db
+      if (isNew)
+      {
+        _db.JournalEntryHeaders.Add(journalEntry);
+      }
+      else
+      {
+        _db.JournalEntryHeaders.Update(journalEntry);
+      }
 
-      //TODO: Persist to db
-      _db.JournalEntryHeaders.Add(journalEntry);
+      
       await _db.SaveChangesAsync();
-
-
 
       return Ok(journalEntry);
     }

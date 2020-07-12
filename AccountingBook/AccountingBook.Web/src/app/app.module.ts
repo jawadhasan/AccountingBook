@@ -14,6 +14,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JournalComponent } from './journal/journal.component';
 import { JournalFormComponent } from './journal/journal-form.component';
+import { CommonModule } from '@angular/common';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
@@ -35,6 +36,7 @@ const routes = [
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

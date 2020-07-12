@@ -4,7 +4,7 @@ export interface Journal {
     referenceNo: string; 
     readyForPosting: boolean,
     posted: boolean,
-    lines?: JournalLine[];
+    lines: JournalLine[];
   }
   export interface JournalLine {
     id: number;
