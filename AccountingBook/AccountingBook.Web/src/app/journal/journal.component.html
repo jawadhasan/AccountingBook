@@ -39,7 +39,7 @@
         </td>
         <td>
           <button id="{{ 'editJournalBtn' + entry.id}}" (click)="editForm(entry.id)" pButton [disabled]="false"
-            icon="fa fa-file-text-o" class="ui-button-secondary"></button>&nbsp;
+            icon="fa fa-edit" class="ui-button-secondary"></button>&nbsp;
           <button id="{{ 'deleteJournalBtn' + entry.id}}" (click)="deleteEntry(entry.id)" pButton
             [disabled]="entry.posted" icon="fa fa-times" class="ui-button-danger"></button>&nbsp;
           <button id="{{ 'postJournalBtn' + entry.id}}" (click)="postEntry(entry.id)" pButton

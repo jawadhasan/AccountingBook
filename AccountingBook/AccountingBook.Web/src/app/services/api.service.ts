@@ -53,4 +53,10 @@ export class ApiService {
   
  
 
+  getCoa() {
+    return this.http.get('/api/accounts');    
+  }
+
+
+
 }

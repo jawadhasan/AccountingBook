@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule} from 'primeng';
+import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule, TreeTableModule} from 'primeng';
 
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -15,9 +15,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { JournalComponent } from './journal/journal.component';
 import { JournalFormComponent } from './journal/journal-form.component';
 import { CommonModule } from '@angular/common';
+import { AccountComponent } from './account/account.component';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
+  { path: 'coa', component: AccountComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'journal', component: JournalComponent },
@@ -31,7 +33,8 @@ const routes = [
     StatisticsComponent,
     DashboardComponent,
     JournalComponent,
-    JournalFormComponent
+    JournalFormComponent,
+    AccountComponent
     
   ],
   imports: [
@@ -50,6 +53,7 @@ const routes = [
     ButtonModule,
     FieldsetModule,
     TableModule,
+    TreeTableModule,
     DialogModule,
     CalendarModule,
     CheckboxModule,

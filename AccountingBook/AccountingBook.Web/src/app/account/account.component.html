@@ -1,0 +1,36 @@
+<div class="accountEntries ui-g">
+
+    <div class="header ui-g-12">
+        <h2>Chart of Accounts</h2>
+
+    </div>
+
+    <p-treeTable [value]="coa" [scrollable]="true" scrollHeight="70vh">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th colspan="2">accountName</th>
+                <th>accountCode</th>                
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Balance</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr>
+                <td colspan="2">
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{rowData.accountName}}
+                </td>
+                <td>{{rowData.accountCode}}</td>
+                <td>{{rowData.debitBalance}}</td>
+                <td>{{rowData.creditBalance}}</td>
+                <td>{{rowData.balance}}</td>
+              
+            </tr>
+        </ng-template>
+
+    </p-treeTable>
+
+</div>

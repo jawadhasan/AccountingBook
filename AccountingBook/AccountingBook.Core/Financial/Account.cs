@@ -55,14 +55,3 @@ namespace AccountingBook.Core.Financial
        }
     }
 }
-
-
-
-
-
-
-
-
-
-//public decimal DebitBalance => GetDebitCreditBalance(DrOrCrSide.Dr);
-//public decimal CreditBalance => GetDebitCreditBalance(DrOrCrSide.Cr);
