@@ -13,7 +13,6 @@ export class TrialBalanceComponent implements OnInit {
   getSum(drcr){
 
     // this.ledgers.map( v => console.log(v.debit));  
-    console.log('sum method called.');
     const sum = this.trialbalance
     .map( v => v[drcr] )
     .reduce( (sum, current) => sum + current, 0 );

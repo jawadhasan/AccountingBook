@@ -75,4 +75,13 @@ export class ApiService {
     return this.http.get('/api/trialBalance');
   }
 
+  
+  getBalanceSheet(){
+    return this.http.get('/api/balanceSheet');
+  }
+
+  getIncomeStatement(){
+    return this.http.get('/api/incomeStatement');
+  }
+
 }

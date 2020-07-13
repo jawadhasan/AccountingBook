@@ -1,4 +1,4 @@
-<p-table #dt [value]="trialbalance">
+<p-table #dt [value]="trialbalance" [scrollable]="true" scrollHeight="55vh">
     <ng-template pTemplate="header">
         <tr>
             <!-- <th>Id</th> -->
@@ -31,7 +31,7 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="summary">
-        <!-- There are {{ledgers?.length}} records -->
-    </ng-template>
+    <!-- <ng-template pTemplate="summary">
+        There are {{ledgers?.length}} records
+    </ng-template> -->
 </p-table>

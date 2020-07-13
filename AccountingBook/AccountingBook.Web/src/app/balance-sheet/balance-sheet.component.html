@@ -1,1 +1,35 @@
-<p>balance-sheet works!</p>
+<p-table #dt [value]="balanceSheet" [scrollable]="true" scrollHeight="50vh">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Account Type</th>
+            <th>Account Code</th>
+            <th>Account Name</th>            
+            <th>Amount</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-entry>
+        <tr>
+            <td>
+                <select  class="ui-inputtext" disabled style="width: 100%;" name = "accountType" [ngModel]="entry.accountType">
+                    <option *ngFor="let item of accountTypes" [ngValue]="item.id">
+                        {{item.name}}
+                    </option>
+                </select>
+            </td>
+            <td>{{entry.accountCode}}</td>
+            <td>{{entry.accountName}}</td>
+            <td>{{entry.amount}}</td>
+                     
+           
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer" let-columns>
+        <tr>
+            <td colspan="3"><span class="pull-right">Sum</span></td>
+            <td>{{getSumAmount()}}</td> 
+        </tr>
+    </ng-template>
+
+</p-table>
