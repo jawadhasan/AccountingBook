@@ -9,16 +9,18 @@
       icon="fa fa-plus"></button>
     </div>
 
-
-
   </div>
 
-  <p-table [value]="journalEntries">
+  <p-table #dt [value]="journalEntries">
     <ng-template pTemplate="header">
       <tr>
         <!-- <th>Id</th> -->
         <th>Date</th>
-        <th>Ref No</th>
+        <th style="width: 20%;">
+          Ref No
+           <input pInputText type="text" (input)="dt.filter($event.target.value, 'referenceNo', 'contains')">
+        
+        </th>
         <th>Debit</th>
         <th pSortableColumn="credit">Credit <p-sortIcon field="credit"></p-sortIcon>
         </th>

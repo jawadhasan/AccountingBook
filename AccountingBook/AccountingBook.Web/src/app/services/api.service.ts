@@ -51,12 +51,21 @@ export class ApiService {
     return this.http.delete('/api/journal/'+id);
   }
   
- 
+  
+  postJournal(id) {
+    return this.http.post('/api/journal/postJournal/'+id,null);
+  }
 
   getCoa() {
     return this.http.get('/api/accounts');    
   }
 
 
+
+  //Ledger
+
+  getLedgerEntries(){
+    return this.http.get('/api/ledger');
+  }
 
 }

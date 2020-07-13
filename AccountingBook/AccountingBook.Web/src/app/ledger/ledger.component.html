@@ -2,6 +2,55 @@
 
     <div class="header ui-g-12">
         <h2>Ledger</h2>
-
     </div>
+
+<p-table #dt [value]="ledgers">
+    <ng-template pTemplate="header">
+        <tr>
+            <!-- <th>Id</th> -->
+            <th>date</th>
+            <th style="width: 20%;">
+                Account Code
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'accountCode', 'contains')">
+            </th>
+            <th style="width: 20%;">Account Name</th>
+            <th>JournalId</th>
+            <th>Ref</th>
+            <th>Debit</th>
+            <th>Credit</th>          
+           
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-entry>
+        <tr>
+            <td>{{entry.date | date: 'dd.MM.yyyy'}}</td>
+            <td>{{entry.accountCode}}</td>
+            <td>{{entry.accountName}}</td>
+            <td>{{entry.transactionNo}}</td>
+            <td>{{entry.reference}}</td>
+            <td>{{entry.debit}}</td>
+            <td>{{entry.credit}}</td>            
+           
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer" let-columns>
+        <tr>
+            <!-- <td></td>
+            <td></td>
+            <td></td> -->
+            
+            <!-- summary fields needed to be in sync with filtering?? -->
+            <!-- <td>{{getSum('debit')}}</td>
+            <td>{{getSum('credit')}}</td>  -->
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary">
+        <!-- There are {{ledgers?.length}} records -->
+    </ng-template>
+</p-table>
+
 </div>
+

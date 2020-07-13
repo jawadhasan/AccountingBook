@@ -9,7 +9,6 @@ import {TreeNode} from 'primeng/api';
 })
 export class AccountComponent implements OnInit {
   coa: TreeNode[];
-  // accounts: any []=[];
 
   constructor(public apiService: ApiService) { }
 
@@ -17,11 +16,13 @@ export class AccountComponent implements OnInit {
 
     //get data from server
     this.apiService.getCoa().subscribe((res: any) => {
-     // console.log('coa: ', res);
-     // this.accounts = res;
       this.coa = res;
       console.log(this.coa);
     });
+  }
+
+  addForm(){
+    console.log('add-new form');
   }
 
 }

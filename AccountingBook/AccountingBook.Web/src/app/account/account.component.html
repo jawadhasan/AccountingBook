@@ -1,16 +1,22 @@
 <div class="component-container ui-g">
 
     <div class="header ui-g-12">
-        <h2>Chart of Accounts</h2>
-
-    </div>
+    
+        <h2 class="pull-left">Chart of Accounts</h2>
+    
+        <div class="right-buttons pull-right">
+          <button type="button" (click)="addForm()" class="ui-button-success" pButton label="Add New"
+          icon="fa fa-plus"></button>
+        </div>
+    
+      </div>
 
     <p-treeTable [value]="coa" [scrollable]="true" scrollHeight="70vh">
 
         <ng-template pTemplate="header">
             <tr>
-                <th colspan="2">accountName</th>
-                <th>accountCode</th>                
+                <th colspan="2">Account Name</th>
+                <th>Account Code</th>                
                 <th>Debit</th>
                 <th>Credit</th>
                 <th>Balance</th>
@@ -24,7 +30,7 @@
                     {{rowData.accountName}}
                 </td>
                 <td>{{rowData.accountCode}}</td>
-                <td>{{rowData.debitBalance}}</td>
+                <td>{{rowData.debitBalance }}</td>
                 <td>{{rowData.creditBalance}}</td>
                 <td>{{rowData.balance}}</td>
               

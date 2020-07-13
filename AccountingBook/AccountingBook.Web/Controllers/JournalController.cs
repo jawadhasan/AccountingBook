@@ -109,7 +109,7 @@ namespace AccountingBook.Web.Controllers
 
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get(long id)
     {
       try
       {
@@ -225,7 +225,7 @@ namespace AccountingBook.Web.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(long id)
     {
       try
       {
@@ -241,6 +241,106 @@ namespace AccountingBook.Web.Controllers
       {
         return BadRequest(e.Message);
       }
+    }
+
+
+    [HttpPost]
+    [Route("[action]/{id}")]
+    public async Task<IActionResult> PostJournal(long id)
+    {
+      try
+      {
+        var journal = await _db.JournalEntryHeaders
+          .Include(je => je.JournalEntryLines)
+          .ThenInclude(c => c.Account)
+          .Include(je => je.GeneralLedgerHeader)
+          .FirstOrDefaultAsync(c => c.Id == id);
+
+        //update status
+        journal.Posted = true;
+
+     
+
+        //build ledger
+        if (journal.GeneralLedgerHeaderId == null || journal.GeneralLedgerHeaderId == 0)
+        {
+          var ledger = new GeneralLedgerHeader();
+          ledger.Description = journal.ReferenceNo;
+
+          //ledger-lines
+          foreach (var item in journal.JournalEntryLines)
+          {
+            var newLedgerLine = new GeneralLedgerLine();
+            newLedgerLine.AccountId = item.AccountId;
+            newLedgerLine.Account = item.Account;//we need to attach the entity as it is being checked in validate method below.
+            newLedgerLine.DrCr = item.DrCr;
+            newLedgerLine.Amount = item.Amount;
+
+            //add line to ledger
+            ledger.GeneralLedgerLines.Add(newLedgerLine);
+          }
+         
+          //validate ledger
+          var isValid = await ValidateGeneralLedgerEntry(ledger);
+          if (isValid)
+          {
+
+            //TODO: refactor and/or improve
+            //saving the ledger 
+            _db.GeneralLedgerHeaders.Add(ledger);
+            await _db.SaveChangesAsync();
+            
+
+            journal.GeneralLedgerHeaderId = ledger.Id;
+            //TODO: do we need to attach the entity itself?
+            await _db.SaveChangesAsync();
+          }
+        }
+        return Ok(journal);
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        return BadRequest(e.Message);
+      }
+    }
+
+
+
+    //TODO: Refactor
+    private async Task<bool> ValidateGeneralLedgerEntry(GeneralLedgerHeader glEntry)
+    {
+
+      if (!glEntry.DrCrEqualityValidated())
+        throw new InvalidOperationException("Debit/Credit are not equal.");
+
+     
+
+      if (!glEntry.NoLineAmountIsEqualToZero())
+        throw new InvalidOperationException("One or more line(s) amount is zero.");
+
+     
+      var duplicateAccounts = glEntry.GeneralLedgerLines
+        .GroupBy(gl => gl.AccountId)
+        .Where(gl => gl.Count() > 1);
+
+      if (duplicateAccounts.Any())
+        throw new InvalidOperationException("Duplicate account id in a collection.");
+
+   
+      foreach (var line in glEntry.GeneralLedgerLines)
+      {
+        var account = await _db.Accounts.FirstOrDefaultAsync(a=> a.Id == line.AccountId);
+
+        if (!account.CanPost())
+          throw new InvalidOperationException("One of the account is not valid for posting");
+      }
+
+      if (!glEntry.ValidateAccountingEquation())
+        throw new InvalidOperationException("One of the account not equal.");
+
+      return true;
+
     }
 
   }

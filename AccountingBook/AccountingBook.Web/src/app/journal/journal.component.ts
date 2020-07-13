@@ -46,8 +46,14 @@ export class JournalComponent implements OnInit {
     });
   }
 
-  postEntry(index: number) {
-    console.log('TODO: post journal', index);
+  postEntry(id: number) {
+    console.log('posting journal-id', id);
+    this.apiService.postJournal(id).subscribe((res: any)=>{    
+      console.log(res);  
+      //TODO: refresh from server
+     // let index = this.journalEntries.findIndex(x => x.id === id);
+     // this.journalEntries.splice(index, 1);
+    });
   } 
 
 }
