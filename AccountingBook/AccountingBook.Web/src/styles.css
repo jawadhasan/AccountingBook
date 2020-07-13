@@ -39,3 +39,14 @@ body .ui-menu .ui-menuitem :hover {
   background-color: #F15B2A !important;
   color: #ffffff;
 }
+
+
+
+.component-container
+  {
+    background-color: white;
+    font-family: "Roboto";
+  }
+  .right-buttons{
+    padding-top: 15px;
+  }

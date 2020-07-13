@@ -1,32 +1,30 @@
+<div class="component-container ui-g">
 
+  <div class="header ui-g-12">
+    <h2>Company</h2>
+  </div>
+</div>
 
-  <form [formGroup]="companyForm" (ngSubmit)="save()" class="ui-g">
+<form class="component-container" [formGroup]="companyForm" (ngSubmit)="save()">
 
-    <p-panel header="Company Information" class="ui-g-12">
-
-    <div class="ui-g">
-      <label for="name" class="ui-g-12 ui-md-2">Name*</label>
-      <input  type="text" pInputText class="ui-g-12 ui-md-5" name="name" formControlName="companyName" required />
-      <div class="ui-g-12 ui-md-5">
-        <!-- for error message -->
-      </div>
+  <div class="ui-fluid">
+    <div class="p-field">
+      <label for="companyName">Name*</label>
+      <input type="text" name="companyName" pInputText formControlName="companyName" required />
     </div>
-    <div class="ui-g">
-      <label for="shortName" class="ui-g-12 ui-md-2">Short Name*</label>
-      <input  type="text" pInputText class="ui-g-12 ui-md-5" name="shortName" formControlName="shortName" required />
-      <div class="ui-g-12 ui-md-5">
-        <!-- for error message -->
-      </div>
-    </div>
-    <div class="ui-g">
-      <label for="code" class="ui-g-12 ui-md-2">Company Code*</label>
-      <input type="text" pInputText class="ui-g-12 ui-md-5" name="code" formControlName="companyCode" required maxlength="5" />
-      <div class="ui-g-12 ui-md-5">
-        <!-- for error message -->
-      </div>
+    <div class="p-field">
+      <label for="shortName">Short Name*</label>
+      <input type="text" pInputText name="shortName" formControlName="shortName" required />
     </div>
 
-    <button pButton  type="submit" [disabled]="hasFormErrors()" label="Save" icon="fa fa-floppy-o"></button>
-  </p-panel>
-  </form>
+    <div class="p-field">
+      <label for="companyCode">Company Code*</label>
+      <input type="text" pInputText name="companyCode" formControlName="companyCode" required maxlength="5" />
+    </div>
+  </div>
 
+  <hr>
+
+  <button pButton type="submit" [disabled]="hasFormErrors()" label="Save" icon="fa fa-floppy-o"></button>
+
+</form>

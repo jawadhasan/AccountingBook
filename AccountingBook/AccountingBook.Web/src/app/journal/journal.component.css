@@ -1,32 +1,8 @@
 
-
-
-.journalEntries {
-    background-color: white;
-    font-family: "Roboto";
-  }
-
-  .header {
-    padding: 1em;
-    color: white;
-    background-color: #0275D8;
-    margin-bottom: 1em;
-  }
-  
-  h2 {
-    font-weight: bolder;
-    font-size: xx-large;
-    display: inline;
-  }
-
-  
-
   th{
     border-bottom: 1px solid black;
     background-color: teal;
     color: white;
-  }
-  th{
     text-align: center;
   }
 
@@ -37,7 +13,6 @@
       overflow-y:scroll;
       position:relative;
   }
-
 
   
   

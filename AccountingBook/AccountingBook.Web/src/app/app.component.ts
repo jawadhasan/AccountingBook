@@ -31,6 +31,7 @@ export class AppComponent {
       allLinks.removeClass("menu-selected");
       let selected = jQuery(event.originalEvent.target).closest('a');
       selected.addClass('menu-selected');
+      console.log('selectedMenu: ', selected);
     }
 
     this.menuItems = [

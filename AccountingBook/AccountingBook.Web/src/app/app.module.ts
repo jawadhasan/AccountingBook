@@ -16,6 +16,9 @@ import { JournalComponent } from './journal/journal.component';
 import { JournalFormComponent } from './journal/journal-form.component';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
+import { LedgerComponent } from './ledger/ledger.component';
+import { ReportsComponent } from './reports/reports.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
@@ -23,7 +26,11 @@ const routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'journal', component: JournalComponent },
-  {path: 'journal/:id', component: JournalFormComponent}
+  {path: 'journal/:id', component: JournalFormComponent},
+  { path: 'ledger', component: LedgerComponent },
+  { path: 'reports', component: ReportsComponent },
+  { path: 'settings', component: SettingsComponent }
+
 ]
 
 @NgModule({
@@ -34,7 +41,10 @@ const routes = [
     DashboardComponent,
     JournalComponent,
     JournalFormComponent,
-    AccountComponent
+    AccountComponent,
+    LedgerComponent,
+    ReportsComponent,
+    SettingsComponent
     
   ],
   imports: [
