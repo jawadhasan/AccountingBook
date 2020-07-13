@@ -4,5 +4,16 @@
         <h2>Reports</h2>
     </div>
 
+    <p-tabView class="ui-g-12" (onChange)="handleChange($event)">
+        <p-tabPanel header="Trial Balance">
+           <trial-balance></trial-balance>
+        </p-tabPanel>
+        <p-tabPanel header="Balance Sheet">
+            <balance-sheet></balance-sheet>
+        </p-tabPanel>
+        <p-tabPanel header="Income Statement">
+            <income-statement></income-statement>
+        </p-tabPanel>
+    </p-tabView>
 
 </div>

@@ -40,6 +40,12 @@ namespace AccountingBook.Core.Financial
 
        private decimal GetBalance()
        {
+           if (ParentAccountId == null)
+           {
+               //top-level accounts
+               var val = ChildAccounts.Sum(c => c.Balance);
+               return val;
+           }
            var drAmount = GeneralLedgerLines.Where(l => l.DrCr == DrOrCrSide.Dr).Sum(l => l.Amount);
            var crAmount = GeneralLedgerLines.Where(l => l.DrCr == DrOrCrSide.Cr).Sum(l => l.Amount);
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule, TreeTableModule} from 'primeng';
+import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule, TreeTableModule, ToastModule, MessageService, TabViewModule} from 'primeng';
 
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -19,6 +19,9 @@ import { AccountComponent } from './account/account.component';
 import { LedgerComponent } from './ledger/ledger.component';
 import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
+import { TrialBalanceComponent } from './trial-balance/trial-balance.component';
+import { BalanceSheetComponent } from './balance-sheet/balance-sheet.component';
+import { IncomeStatementComponent } from './income-statement/income-statement.component';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
@@ -44,7 +47,10 @@ const routes = [
     AccountComponent,
     LedgerComponent,
     ReportsComponent,
-    SettingsComponent
+    SettingsComponent,
+    TrialBalanceComponent,
+    BalanceSheetComponent,
+    IncomeStatementComponent
     
   ],
   imports: [
@@ -67,9 +73,11 @@ const routes = [
     DialogModule,
     CalendarModule,
     CheckboxModule,
-    DropdownModule    
+    DropdownModule,
+    ToastModule,
+    TabViewModule    
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

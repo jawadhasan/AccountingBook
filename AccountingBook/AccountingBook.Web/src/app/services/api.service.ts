@@ -68,4 +68,11 @@ export class ApiService {
     return this.http.get('/api/ledger');
   }
 
+
+  //Reports
+  
+  getTrialBalance(){
+    return this.http.get('/api/trialBalance');
+  }
+
 }

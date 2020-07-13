@@ -1,0 +1,37 @@
+<p-table #dt [value]="trialbalance">
+    <ng-template pTemplate="header">
+        <tr>
+            <!-- <th>Id</th> -->
+            <th>
+                Account Code
+            </th>
+            <th>Account Name</th>            
+            <th>Debit</th>
+            <th>Credit</th>          
+           
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-entry>
+        <tr>
+            <td>{{entry.accountCode}}</td>
+            <td>{{entry.accountName}}</td>
+            <td>{{entry.debit}}</td>
+            <td>{{entry.credit}}</td>            
+           
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer" let-columns>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{getSum('debit')}}</td>
+            <td>{{getSum('credit')}}</td> 
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary">
+        <!-- There are {{ledgers?.length}} records -->
+    </ng-template>
+</p-table>
