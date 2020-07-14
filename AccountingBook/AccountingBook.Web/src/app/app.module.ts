@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule, TreeTableModule, ToastModule, MessageService, TabViewModule} from 'primeng';
+import {MenuModule,PanelModule, InputTextModule, ButtonModule, TableModule, DialogModule, CalendarModule, CheckboxModule, DropdownModule, InputNumberModule, FieldsetModule, CardModule, TreeTableModule, ToastModule, MessageService, TabViewModule, ChartModule} from 'primeng';
 
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -75,7 +75,8 @@ const routes = [
     CheckboxModule,
     DropdownModule,
     ToastModule,
-    TabViewModule    
+    TabViewModule,
+    ChartModule    
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

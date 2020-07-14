@@ -10,14 +10,50 @@
     </div>
 
 
-  <div class="ui-g-12 ui-g-nopad">
-    <hr>
+    <div class="ui-g-12 ui-g-nopad">
+      <hr>
+    </div>
   </div>
+  
 </div>
 
-<!-- Stats widgets -->
-<ab-statistics *ngFor="let item of stats" [label]="item.label" [value]="item.value" [icon]="item.icon"
-  [colour]="item.colour" class="ui-g-12 ui-md-6 ui-lg-3">
-</ab-statistics>
+
+  <!-- Stats widgets -->
+  <div class="ui-g">
+    <ab-statistics *ngFor="let item of stats" [label]="item.label" [value]="item.value" [icon]="item.icon"
+      [colour]="item.colour" class="ui-g-12 ui-md-6 ui-lg-3">
+    </ab-statistics>
+  </div>
+
+
+  <!-- Pie Chart -->
+<div class="ui-g">
+
+  <p-panel header="Hours By Project (pie)" class="ui-g-12 ui-md-6">
+    <p-chart type="pie" [data]="hoursByProjectChartData"></p-chart>
+  </p-panel>
+
+  <p-panel header="Hours By Project (doughnut)" class="ui-g-12 ui-md-6">
+    <p-chart type="doughnut" [data]="hoursByProjectChartData"></p-chart>
+  </p-panel>
+
+  <!-- <p-panel header="Hours By Project (polarArea)" class="ui-g-12 ui-md-6">
+    <p-chart type="polarArea" [data]="hoursByProjectChartData"></p-chart>
+  </p-panel> -->
+
+</div>
+
+
+<div class="ui-g">
+
+
+  <p-panel header="Hours By Team (bar)" class="ui-g-12 ui-md-6">
+    <p-chart type="bar" [data]="hoursByTeamChartData"></p-chart>
+  </p-panel>
+
+  
+  <p-panel header="Hours By Team (line)" class="ui-g-12 ui-md-6">
+    <p-chart type="line" [data]="hoursByTeamChartData"></p-chart>
+  </p-panel>
 
 </div>
