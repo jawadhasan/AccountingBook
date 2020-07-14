@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,9 +5,7 @@ using AccountingBook.Core.Enums;
 using AccountingBook.Core.Financial;
 using AccountingBook.Data;
 using AccountingBook.Web.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountingBook.Web.Controllers
 {
@@ -16,11 +13,11 @@ namespace AccountingBook.Web.Controllers
   [ApiController]
   public class LedgerController : ControllerBase
   {
-    private readonly AppDbContext _db;
+    private readonly Repository _repo;
 
-    public LedgerController(AppDbContext db)
+    public LedgerController(Repository repo)
     {
-      _db = db;
+      _repo = repo;
     }
 
     [HttpGet]
@@ -32,8 +29,6 @@ namespace AccountingBook.Web.Controllers
       //return Ok(dto);
       return Ok(generalLedgerTree);
     }
-
-
 
     private async Task<IEnumerable<MasterGeneralLedger>> MasterGeneralLedger()
     {
@@ -73,36 +68,20 @@ namespace AccountingBook.Web.Controllers
       return await Task.FromResult(sortedList.ToList());
     }
 
-
     //helper methods level-0
     private IEnumerable<MasterGeneralLedger> GetAllDebits()
     {
       //Get LedgerLines for Debit entries
-      var allDr = GetGeneralLedgerLines(DrOrCrSide.Dr);
-
+      var allDr = _repo.GetGeneralLedgerLines(DrOrCrSide.Dr);
       return BuildMasterGeneralLedger(allDr, DrOrCrSide.Dr);
     }
     private IEnumerable<MasterGeneralLedger> GetAllCredits()
     {
       //Get LedgerLines for CreditEntries entries
-      var allCr = GetGeneralLedgerLines(DrOrCrSide.Cr);
+      var allCr = _repo.GetGeneralLedgerLines(DrOrCrSide.Cr);
       return BuildMasterGeneralLedger(allCr, DrOrCrSide.Cr);
     }
-
-    //helper methods Level-1
-    private IEnumerable<GeneralLedgerLine> GetGeneralLedgerLines(DrOrCrSide drOrCr)
-    {
-      var drCr = _db.GeneralLedgerLines
-        .Include(gl => gl.GeneralLedgerHeader)
-        .Include(gl => gl.Account)
-        .Where(l => l.DrCr == drOrCr)
-        .AsEnumerable();
-
-      return drCr;
-    }
-
-
-
+    
     private static IEnumerable<MasterGeneralLedger> BuildMasterGeneralLedger(
       IEnumerable<GeneralLedgerLine> generalLedgerLines, DrOrCrSide drOrCr)
     {
@@ -118,7 +97,6 @@ namespace AccountingBook.Web.Controllers
           Date = l.GeneralLedgerHeader.Date,
           Debit = drOrCr == DrOrCrSide.Dr ? l.Amount : 0,
           Credit = drOrCr == DrOrCrSide.Cr ? l.Amount : 0,
-          //DocumentType = Enum.GetName(typeof(DocumentTypes), l.GeneralLedgerHeader.DocumentType)
         });
 
       return masterGeneralLedgers;

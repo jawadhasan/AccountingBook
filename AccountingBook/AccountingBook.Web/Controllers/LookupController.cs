@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AccountingBook.Data;
 using AccountingBook.Web.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountingBook.Web.Controllers
 {
@@ -12,23 +10,18 @@ namespace AccountingBook.Web.Controllers
   [ApiController]
   public class LookupController : ControllerBase
   {
-    private readonly AppDbContext _db;
+    private readonly Repository _repo;
 
-    public LookupController(AppDbContext db)
+    public LookupController(Repository repo)
     {
-      _db = db;
+      _repo = repo;
     }
 
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> PostingAccounts()
     {
-      var accounts = await _db.Accounts
-        .Include(a => a.ChildAccounts)
-        .Where(a => a.ChildAccounts.Count == 0) //notice this property
-        .OrderBy(a => a.AccountName)
-        .ThenBy(a => a.AccountType)
-        .ToListAsync();
+      var accounts = await _repo.GetPostingAccounts();
 
       var accountsDto = new HashSet<LookupItem>();
 

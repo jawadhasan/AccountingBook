@@ -34,6 +34,8 @@ namespace AccountingBook.Web
         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
       });
 
+      services.AddScoped<Repository>();
+
       services.AddControllers().AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
       );

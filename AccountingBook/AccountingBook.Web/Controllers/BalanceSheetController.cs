@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AccountingBook.Core.Enums;
-using AccountingBook.Core.Financial;
 using AccountingBook.Data;
 using AccountingBook.Web.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountingBook.Web.Controllers
 {
@@ -16,10 +12,10 @@ namespace AccountingBook.Web.Controllers
   [ApiController]
   public class BalanceSheetController : ControllerBase
   {
-    private readonly AppDbContext _db;
-    public BalanceSheetController(AppDbContext db)
+    private readonly Repository _repo;
+    public BalanceSheetController(Repository repo)
     {
-      _db = db;
+      _repo = repo;
     }
 
     [HttpGet]
@@ -39,13 +35,11 @@ namespace AccountingBook.Web.Controllers
     }
 
 
-
-
     public async Task<IEnumerable<BalanceSheet>> BalanceSheet()
     {
-      var assets = await GetAccountsByAccountType(AccountType.Assets);
-      var liabilities = await GetAccountsByAccountType(AccountType.Liabilities);
-      var equities = await GetAccountsByAccountType(AccountType.Equity);
+      var assets = await _repo.GetAccountsByAccountType(AccountType.Assets);
+      var liabilities = await _repo.GetAccountsByAccountType(AccountType.Liabilities);
+      var equities = await _repo.GetAccountsByAccountType(AccountType.Equity);
 
       var balanceSheet = new HashSet<BalanceSheet>();
       foreach (var asset in assets)
@@ -84,16 +78,6 @@ namespace AccountingBook.Web.Controllers
       return await Task.FromResult(balanceSheet);
     }
 
-    private async Task<List<Account>> GetAccountsByAccountType(AccountType accountType)
-    {
-      var accounts = await _db.Accounts
-        .Include(a => a.ChildAccounts)
-        .Include(a => a.ParentAccount)
-        .Include(a => a.GeneralLedgerLines)
-        .Where(a => a.AccountType == accountType && a.ParentAccountId != null)
-        .ToListAsync();
-      return accounts;
-    }
 
   }
 }

@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccountingBook.Core.Enums;
-using AccountingBook.Core.Financial;
 using AccountingBook.Data;
 using AccountingBook.Web.Dtos;
-using AccountingBook.Web.Utils;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountingBook.Web.Controllers
 {
@@ -17,11 +13,11 @@ namespace AccountingBook.Web.Controllers
   [ApiController]
   public class TrialBalanceController : ControllerBase
   {
-    private readonly AppDbContext _db;
+    private readonly Repository _repo;
 
-    public TrialBalanceController(AppDbContext db)
+    public TrialBalanceController(Repository repo)
     {
-      _db = db;
+      _repo = repo;
     }
 
     [HttpGet]
@@ -40,10 +36,9 @@ namespace AccountingBook.Web.Controllers
     
     }
 
-
     private async Task<IEnumerable<TrialBalanceDto>> TrialBalance()
     {
-      var allDebitLines = GetGeneralLedgerLines(DrOrCrSide.Dr);
+      var allDebitLines = _repo.GetGeneralLedgerLines(DrOrCrSide.Dr);
       var allDr = allDebitLines
         .GroupBy(l => new { l.AccountId, l.Account.AccountCode, l.Account.AccountName, l.Amount })
         .Select(l => new
@@ -55,7 +50,7 @@ namespace AccountingBook.Web.Controllers
         });
 
 
-      var allCreditLines = GetGeneralLedgerLines(DrOrCrSide.Cr);
+      var allCreditLines = _repo.GetGeneralLedgerLines(DrOrCrSide.Cr);
       var allCr = allCreditLines
         .GroupBy(l => new { l.AccountId, l.Account.AccountCode, l.Account.AccountName, l.Amount })
         .Select(l => new
@@ -101,18 +96,6 @@ namespace AccountingBook.Web.Controllers
         }).ToList();
 
       return await Task.FromResult(accounts);
-    }
-
-    //duplicated b/w general ledger controller and this one, refactor it
-    private IEnumerable<GeneralLedgerLine> GetGeneralLedgerLines(DrOrCrSide drOrCr)
-    {
-      var drCr = _db.GeneralLedgerLines
-        .Include(gl => gl.GeneralLedgerHeader)
-        .Include(gl => gl.Account)
-        .Where(l => l.DrCr == drOrCr)
-        .AsEnumerable();
-
-      return drCr;
     }
 
   }

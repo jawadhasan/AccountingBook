@@ -18,10 +18,12 @@ namespace AccountingBook.Web.Controllers
   public class JournalController : ControllerBase
   {
     private readonly AppDbContext _db;
+    private readonly Repository _repo;
 
-    public JournalController(AppDbContext db)
+    public JournalController(AppDbContext db, Repository repo)
     {
       _db = db;
+      _repo = repo;
     }
 
 
@@ -35,25 +37,11 @@ namespace AccountingBook.Web.Controllers
     }
 
 
-    private async Task<List<JournalEntryHeader>>  GetJournalEntries()
-    {
-
-      var journalEntries = await _db.JournalEntryHeaders
-        .Include(je => je.JournalEntryLines)
-        .ThenInclude(c => c.Account)
-        .Include(je => je.GeneralLedgerHeader)
-        .ToListAsync();
-
-      return journalEntries;
-    }
-
-
-
     [HttpGet]
     public async Task<IActionResult> Get(int includePosted = 1)
     {
 
-      var journalEntries = await GetJournalEntries();
+      var journalEntries = await _repo.GetJournalEntries();
       var journalEntryDtosList = new List<JournalEntryHeaderDto>();
 
       //mapping from db entity to Dto
@@ -123,15 +111,9 @@ namespace AccountingBook.Web.Controllers
     {
       try
       {
-        var result = await _db.JournalEntryHeaders
-          .Include(je => je.JournalEntryLines)
-          .ThenInclude(c => c.Account)
-          .Include(je => je.GeneralLedgerHeader)
-          .FirstOrDefaultAsync(c => c.Id == id);
-
+        var result = await _repo.GetJournalEntryById(id);
 
         //Mapping FROM database entity to Dto
-
         var dto = new JournalEntryHeaderDto();
         dto.Id = result.Id;
         dto.Date = result.Date;
@@ -161,6 +143,24 @@ namespace AccountingBook.Web.Controllers
       }
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(long id)
+    {
+      try
+      {
+        var removeableJournal = await _db.JournalEntryHeaders.FirstOrDefaultAsync(c => c.Id == id);
+        if (removeableJournal != null && !removeableJournal.Posted)
+        {
+          _db.JournalEntryHeaders.Remove(removeableJournal);
+          await _db.SaveChangesAsync();
+        }
+        return Ok();
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
     [HttpPost]
     [Route("[action]")]
@@ -234,42 +234,15 @@ namespace AccountingBook.Web.Controllers
       return Ok(journalEntry);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(long id)
-    {
-      try
-      {
-        var removeableJournal = await _db.JournalEntryHeaders.FirstOrDefaultAsync(c => c.Id == id);
-        if (removeableJournal != null && !removeableJournal.Posted)
-        {
-          _db.JournalEntryHeaders.Remove(removeableJournal);
-          await _db.SaveChangesAsync();
-        }
-        return Ok();
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
-
     [HttpPost]
     [Route("[action]/{id}")]
     public async Task<IActionResult> PostJournal(long id)
     {
       try
       {
-        var journal = await _db.JournalEntryHeaders
-          .Include(je => je.JournalEntryLines)
-          .ThenInclude(c => c.Account)
-          .Include(je => je.GeneralLedgerHeader)
-          .FirstOrDefaultAsync(c => c.Id == id);
-
+        var journal = await _repo.GetJournalEntryById(id);
         //update status
         journal.Posted = true;
-
-     
 
         //build ledger
         if (journal.GeneralLedgerHeaderId == null || journal.GeneralLedgerHeaderId == 0)
@@ -316,6 +289,7 @@ namespace AccountingBook.Web.Controllers
     }
 
 
+    //Private
 
     //TODO: Refactor
     private async Task<bool> ValidateGeneralLedgerEntry(GeneralLedgerHeader glEntry)

@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccountingBook.Core.Financial;
 using AccountingBook.Data;
 using AccountingBook.Web.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountingBook.Web.Controllers
 {
@@ -15,20 +12,18 @@ namespace AccountingBook.Web.Controllers
   [ApiController]
   public class AccountsController : ControllerBase
   {
-    private readonly AppDbContext _db;
+   
+    private readonly Repository _repo;
 
-    public AccountsController(AppDbContext db)
+    public AccountsController(Repository repo)
     {
-      _db = db;
+      _repo = repo;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      var accounts = await _db.Accounts
-        .Include(a => a.ChildAccounts)
-        .Include(a=> a.GeneralLedgerLines)
-        .ToListAsync();
+      var accounts = await _repo.GetAccounts();
 
       //var accountTree = BuildAccountGrouping(accounts.ToList(), null);
       //return Ok(accountTree);
