@@ -2,16 +2,22 @@
 
 
   <div class="header ui-g-12">
-    <h2>Dashboard</h2>
+    <h2 class="pull-left">Dashboard</h2>
+
+    <div class="right-buttons pull-right">
+      <button type="button" (click)="refresh()" class="ui-button-info" pButton label="Refresh"
+        icon="fa fa-refresh"></button>
+    </div>
+
+
+  <div class="ui-g-12 ui-g-nopad">
     <hr>
   </div>
+</div>
 
-   <!-- Stats widgets -->
-    <ab-statistics *ngFor="let item of stats"
-    [label]="item.label" 
-    [value]="item.value" 
-    [icon]="item.icon"
-    [colour]="item.colour" class="ui-g-12 ui-md-6 ui-lg-3">
-    </ab-statistics>
+<!-- Stats widgets -->
+<ab-statistics *ngFor="let item of stats" [label]="item.label" [value]="item.value" [icon]="item.icon"
+  [colour]="item.colour" class="ui-g-12 ui-md-6 ui-lg-3">
+</ab-statistics>
 
 </div>

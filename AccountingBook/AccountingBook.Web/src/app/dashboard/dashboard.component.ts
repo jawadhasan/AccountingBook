@@ -19,8 +19,12 @@ export class DashboardComponent implements OnInit {
       {icon:"fa fa-bar-chart",label:"Liabilities",value:"27,835",colour:"#2F8EE5"},
       {icon:"fa fa-pie-chart",label:"Revenue",value:"7,763",colour:"#6C76AF"},
       {icon:"fa fa-area-chart",label:"Expenses",value:"4,456",colour:"#EFA64C"},
-      {icon:"fa fa-book",label:"Equity",value:"8,456",colour:"#8BA39C"}
+      {icon:"fa fa-file-text",label:"Equity",value:"8,456",colour:"#8BA39C"}
     ];
+  }
+
+  refresh(){
+    console.log('refresh');
   }
 
 }
