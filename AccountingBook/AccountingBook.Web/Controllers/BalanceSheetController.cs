@@ -34,7 +34,6 @@ namespace AccountingBook.Web.Controllers
 
     }
 
-
     public async Task<IEnumerable<BalanceSheet>> BalanceSheet()
     {
       var assets = await _repo.GetAccountsByAccountType(AccountType.Assets);
@@ -77,7 +76,6 @@ namespace AccountingBook.Web.Controllers
       }
       return await Task.FromResult(balanceSheet);
     }
-
 
   }
 }

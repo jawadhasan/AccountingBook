@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'company',
@@ -15,7 +16,8 @@ export class CompanyComponent implements OnInit {
 
    constructor(
      private fb: FormBuilder,
-     public apiService: ApiService
+     public apiService: ApiService,
+     private messageService: MessageService
      ){}
    
   ngOnInit(): void {  
@@ -44,7 +46,15 @@ export class CompanyComponent implements OnInit {
 
   save(){
    console.log(this.companyForm.value);
-   this.apiService.saveCompanyData(this.companyForm.value);
+   this.apiService.saveCompanyData(this.companyForm.value).subscribe(res => {
+    console.log(res);
+    this.messageService.add({severity:'success', summary: 'Success Message', detail: 'Company saved'});
+
+  }, err => {
+    console.error(err);
+    this.messageService.add({severity:'error', summary: 'Error Message', detail: err?.error ?? err.message});
+
+  })
   }
 
   

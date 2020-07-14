@@ -35,13 +35,13 @@ export class AppComponent {
     }
 
     this.menuItems = [
-      {label: 'Dashboard', icon: 'fa fa-home', routerLink: ['/dashboard'], command: (event) => handleSelected(event)},
+      {label: 'Dashboard', icon: 'fa fa-dashboard', routerLink: ['/dashboard'], command: (event) => handleSelected(event)},
       {label: 'COA', icon: 'fa fa-tasks', routerLink: ['/coa'], command: (event) => handleSelected(event)},
       {label: 'Journal', icon: 'fa fa-book', routerLink: ['/journal'], command: (event) => handleSelected(event)},
       {label: 'Ledger', icon: 'fa fa-calculator', routerLink: ['/ledger'], command: (event) => handleSelected(event)},
       {label: 'Reports', icon: 'fa fa-bookmark', routerLink: ['/reports'], command: (event) => handleSelected(event)},
       {label: 'Company', icon: 'fa fa-building', routerLink: ['/company'], command: (event) => handleSelected(event)},
-      {label: 'Settings', icon: 'fa fa-sliders', routerLink: ['/settings'], command: (event) => handleSelected(event)},
+      {label: 'About', icon: 'fa fa-sliders', routerLink: ['/about'], command: (event) => handleSelected(event)},
     ]
 
     this.miniMenuItems = [];

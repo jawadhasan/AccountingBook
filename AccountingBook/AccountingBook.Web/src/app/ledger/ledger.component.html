@@ -2,9 +2,10 @@
 
     <div class="header ui-g-12">
         <h2>Ledger</h2>
+        <hr>
     </div>
 
-<p-table #dt [value]="ledgers" [scrollable]="true" scrollHeight="60vh">
+<p-table #dt [value]="ledgers" [scrollable]="true" scrollHeight="55vh">
     <ng-template pTemplate="header">
         <tr>
             <!-- <th>Id</th> -->
@@ -25,8 +26,8 @@
     <ng-template pTemplate="body" let-entry>
         <tr>
             <td>{{entry.date | date: 'dd.MM.yyyy'}}</td>
-            <td>{{entry.accountCode}}</td>
-            <td>{{entry.accountName}}</td>
+            <td style="width: 20%;">{{entry.accountCode}}</td>
+            <td style="width: 20%;">{{entry.accountName}}</td>
             <td>{{entry.transactionNo}}</td>
             <td>{{entry.reference}}</td>
             <td>{{entry.debit}}</td>

@@ -22,11 +22,7 @@ export class ApiService {
   }
 
   saveCompanyData(company) {
-    return this.http.post('/api/company', company).subscribe(res => {
-      console.log(res);
-    }, err => {
-      console.error(err);
-    })
+    return this.http.post('/api/company', company);
   }
 
 

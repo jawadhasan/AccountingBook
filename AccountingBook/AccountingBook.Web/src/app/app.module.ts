@@ -18,10 +18,10 @@ import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
 import { LedgerComponent } from './ledger/ledger.component';
 import { ReportsComponent } from './reports/reports.component';
-import { SettingsComponent } from './settings/settings.component';
 import { TrialBalanceComponent } from './trial-balance/trial-balance.component';
 import { BalanceSheetComponent } from './balance-sheet/balance-sheet.component';
 import { IncomeStatementComponent } from './income-statement/income-statement.component';
+import { AboutComponent } from './about/about.component';
 
 const routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
@@ -32,7 +32,7 @@ const routes = [
   {path: 'journal/:id', component: JournalFormComponent},
   { path: 'ledger', component: LedgerComponent },
   { path: 'reports', component: ReportsComponent },
-  { path: 'settings', component: SettingsComponent }
+  { path: 'about', component: AboutComponent }
 
 ]
 
@@ -46,11 +46,11 @@ const routes = [
     JournalFormComponent,
     AccountComponent,
     LedgerComponent,
-    ReportsComponent,
-    SettingsComponent,
+    ReportsComponent,    
     TrialBalanceComponent,
     BalanceSheetComponent,
-    IncomeStatementComponent
+    IncomeStatementComponent,
+    AboutComponent
     
   ],
   imports: [

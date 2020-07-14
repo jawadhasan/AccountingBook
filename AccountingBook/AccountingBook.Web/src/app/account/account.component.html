@@ -7,11 +7,16 @@
         <div class="right-buttons pull-right">
           <button type="button" (click)="addForm()" class="ui-button-success" pButton label="Add New"
           icon="fa fa-plus"></button>
-        </div>
-       
+        </div>       
+      
       </div>
 
-    <p-treeTable [value]="coa" [scrollable]="true" scrollHeight="70vh">
+      <div class="ui-g-12 ui-g-nopad">
+        <hr>
+      </div>
+      
+
+    <p-treeTable [value]="coa" [scrollable]="true" scrollHeight="60vh">
 
         <ng-template pTemplate="header">
             <tr>

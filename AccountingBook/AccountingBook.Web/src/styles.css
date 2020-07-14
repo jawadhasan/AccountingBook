@@ -15,7 +15,6 @@ body {
     border: none !important;
     background-color: #2D353C !important;
   }
-
   
 .ui-menu-list {
   background-color: black;
@@ -41,14 +40,7 @@ body .ui-menu .ui-menuitem :hover {
 }
 
 
-
-.component-container
-  {
-    background-color: white;
-    font-family: "Roboto";
-  }
-
-  
+/* other global styles */
   .right-buttons{
     padding-top: 15px;
   }
