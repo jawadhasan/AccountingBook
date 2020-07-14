@@ -9,6 +9,14 @@
   
   #top-logo {
     height: 60px;
+    background-color: transparent;
+  }
+  .app-title{
+    text-transform: uppercase;
+    text-shadow: #2D353C;
+    color: blue;
+    font-weight: bold;
+    font-size: 20px;
   }
   
   #notifications {

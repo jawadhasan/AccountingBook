@@ -21,9 +21,9 @@
       <tr>
         <!-- <th>Id</th> -->
         <th>Date</th>
-        <th style="width: 20%;">
+        <th style="width: 15%;">
           Ref No
-           <input pInputText type="text" (input)="dt.filter($event.target.value, 'referenceNo', 'contains')">
+           <input pInputText type="text" style="width: 10vw;" (input)="dt.filter($event.target.value, 'referenceNo', 'contains')">
         
         </th>
         <th>Debit</th>
@@ -31,14 +31,14 @@
         </th>
         <th>Ready For Posting</th>
         <th>Posted</th>
-        <th>Action</th>
+        <th style="width: 18%;">Action</th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-entry>
       <tr>
         <td>{{entry.date | date: 'dd.MM.yyyy'}}</td>
-        <td style="width: 20%;">{{entry.referenceNo}}</td>
+        <td style="width: 15%;">{{entry.referenceNo}}</td>
         <td>{{entry.debit | number}}</td>
         <td>{{entry.credit | number}}</td>
         <!-- <td>{{entry.posted}}</td> -->
@@ -48,7 +48,7 @@
         <td>
           <p-checkbox [(ngModel)]="entry.posted" [binary]="true" [readonly]="true"> </p-checkbox>
         </td>
-        <td>
+        <td style="width: 18%;">
           <button id="{{ 'editJournalBtn' + entry.id}}" (click)="editForm(entry.id)" pButton [disabled]="false"
             icon="fa fa-edit" class="ui-button-secondary"></button>&nbsp;
           <button id="{{ 'deleteJournalBtn' + entry.id}}" (click)="deleteEntry(entry.id)" pButton
