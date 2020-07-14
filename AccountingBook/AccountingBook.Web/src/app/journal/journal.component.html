@@ -11,7 +11,7 @@
 
   </div>
 
-  <p-table #dt [value]="journalEntries">
+  <p-table #dt [value]="journalEntries" [scrollable]="true" scrollHeight="55vh">
     <ng-template pTemplate="header">
       <tr>
         <!-- <th>Id</th> -->
@@ -33,7 +33,7 @@
     <ng-template pTemplate="body" let-entry>
       <tr>
         <td>{{entry.date | date: 'dd.MM.yyyy'}}</td>
-        <td>{{entry.referenceNo}}</td>
+        <td style="width: 20%;">{{entry.referenceNo}}</td>
         <td>{{entry.debit | number}}</td>
         <td>{{entry.credit | number}}</td>
         <!-- <td>{{entry.posted}}</td> -->
@@ -57,6 +57,6 @@
       </tr>
     </ng-template>
   </p-table>
-
+  <p-toast></p-toast>
 </div>
 

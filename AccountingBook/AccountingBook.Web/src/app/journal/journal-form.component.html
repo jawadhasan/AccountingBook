@@ -96,11 +96,11 @@
         <button pButton type="button" (click)="addLine()" icon="pi pi-plus" label="New" class="ui-button-success"
             style="margin-right: .25em" [disabled]="!lines.valid"></button>
 
-        <button pButton type="button" (click)="backToList()" class="pull-right ui-button-secondary" label="List"
+        <button pButton type="button" (click)="backToList()" class="pull-right ui-button-secondary" label="Close"
             icon="fa fa-times"></button>
 
         <button pButton type="button" (click)="documentEditForm.ngSubmit.emit()" class="pull-right ui-button-primary"
-            label="Save" icon="fa fa-floppy-o" [disabled]="!documentEditForm.form.valid"></button>
+            label="Save" icon="fa fa-floppy-o" [disabled]="!documentEditForm.form.valid || journalEntry.posted"></button>
     </p-footer>
 
 <!-- <pre>
@@ -109,3 +109,4 @@
 
 
 </p-panel>
+<p-toast></p-toast>

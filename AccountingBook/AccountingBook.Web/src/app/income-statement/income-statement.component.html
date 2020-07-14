@@ -1,1 +1,39 @@
-<p>income-statement works!</p>
+<p-table #dt [value]="incomeStatement" [scrollable]="true" scrollHeight="38vh">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Account Type</th>
+            <th>Account Code</th>
+            <th>Account Name</th>
+            <th>Amount</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-entry>
+        <tr>
+            <td>
+                {{entry.isExpense ? 'Expenses' : 'Revenues'}}
+            </td>
+            <td>{{entry.accountCode}}</td>
+            <td>{{entry.accountName}}</td>
+            <td>{{entry.amount}}</td>
+
+
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer" let-columns>
+        <tr>
+            <td colspan="3"><span class="pull-right">Net Income</span></td>
+            <td>{{getSumRevenue() - getSumExpense()}}</td>
+        </tr>
+        <tr>
+            <td colspan="3"><span class="pull-right">Total Revenue</span></td>
+            <td>{{getSumRevenue()}}</td>
+        </tr>
+        <tr>
+            <td colspan="3"><span class="pull-right">Total Expense</span></td>
+            <td>{{getSumExpense()}}</td>
+        </tr>
+    </ng-template>
+
+</p-table>

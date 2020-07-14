@@ -3,6 +3,7 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Journal } from '../models/journal';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'journal-form',
@@ -30,7 +31,8 @@ export class JournalFormComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
     private fb: FormBuilder,
-    public apiService: ApiService) { }
+    public apiService: ApiService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -60,9 +62,7 @@ export class JournalFormComponent implements OnInit {
     this.apiService.getPostingAccounts().subscribe((res: any) => {
       this.accounts = res;
 
-      if (id !== '0') {
-        this.operationText = 'Update';
-        console.log('idcalling');
+      if (id !== '0') {       
         this.getJournal(id);
       }
     });
@@ -97,6 +97,14 @@ export class JournalFormComponent implements OnInit {
         this.addGroupLine(l);
       });
 
+      if(this.journalEntry.posted){
+        //disable on run-time
+        //this.JournalEntryForm.get('lines').disable({ onlySelf: true });
+        this.operationText = 'Read-Only';
+      }else{
+        this.operationText = 'Edit';
+      }
+
     });
 
   }
@@ -113,7 +121,7 @@ export class JournalFormComponent implements OnInit {
       this.backToList();
     }, err => {
       console.error(err);
-      this.operationText = err.error;
+      this.messageService.add({severity:'error', summary: 'Error Message', detail: err.error});
     })
 
   }

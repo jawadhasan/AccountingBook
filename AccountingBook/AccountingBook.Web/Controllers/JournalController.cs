@@ -34,8 +34,8 @@ namespace AccountingBook.Web.Controllers
       return Ok(staticData);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Get()
+
+    private async Task<List<JournalEntryHeader>>  GetJournalEntries()
     {
 
       var journalEntries = await _db.JournalEntryHeaders
@@ -43,6 +43,17 @@ namespace AccountingBook.Web.Controllers
         .ThenInclude(c => c.Account)
         .Include(je => je.GeneralLedgerHeader)
         .ToListAsync();
+
+      return journalEntries;
+    }
+
+
+
+    [HttpGet]
+    public async Task<IActionResult> Get(int includePosted = 1)
+    {
+
+      var journalEntries = await GetJournalEntries();
       
       var journalEntryDtosList = new List<JournalEntryHeaderDto>();
 
@@ -335,6 +346,7 @@ namespace AccountingBook.Web.Controllers
         if (!account.CanPost())
           throw new InvalidOperationException("One of the account is not valid for posting");
       }
+
 
       if (!glEntry.ValidateAccountingEquation())
         throw new InvalidOperationException("One of the account not equal.");

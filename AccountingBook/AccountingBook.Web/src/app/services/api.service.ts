@@ -34,8 +34,13 @@ export class ApiService {
     return this.http.get('/api/lookup/postingAccounts');
   }
 
-  getJournalEntries(){
-    return this.http.get('/api/journal');
+  getJournalEntries(includePosted){
+    if(includePosted){
+      return this.http.get('/api/journal');
+    }else{
+      return this.http.get('/api/journal/off');
+    }
+    
   }
 
   getJournal(id: number) {
