@@ -54,7 +54,6 @@ namespace AccountingBook.Web.Controllers
     {
 
       var journalEntries = await GetJournalEntries();
-      
       var journalEntryDtosList = new List<JournalEntryHeaderDto>();
 
       //mapping from db entity to Dto
