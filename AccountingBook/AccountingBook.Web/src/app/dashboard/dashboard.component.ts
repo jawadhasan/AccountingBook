@@ -6,28 +6,73 @@ const DEFAULT_COLORS = ['#3366CC', '#DC3912', '#FF9900', '#109618', '#990099',
   '#316395', '#994499', '#22AA99', '#AAAA11', '#6633CC',
   '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC']
 
+const DEFAULT_ICONS = ['fa fa-line-chart', 'fa fa-bar-chart',
+  'fa fa-pie-chart',
+  'fa fa-area-chart'
+]
+
 @Component({
   selector: 'ab-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  
-  stats:any=[];
+  stats: any = [];
+  accountsStats: any;
+  balanceByAccountChartData: any;
+ 
+  constructor(public apiService: ApiService) { }
 
-  hoursByProject = [
-    { id: 1, name: 'Payroll App', hoursSpent: 8 },
-    { id: 2, name: 'Agile Times App', hoursSpent: 16 },
-    { id: 3, name: 'Point of Sale App', hoursSpent: 24 },
-  ];
+  ngOnInit(): void { 
+    //get data from server
+   this.loadData();
+  }
 
  
+  configurePie() {
+    let pieLabels = this.accountsStats.map((account) => account.accountName);
+    let pieData = this.accountsStats.map((account) => account.balance);
+    let pieColors = this.configureDefaultColours(pieData);
 
-  //transformations
-  pieLabels = this.hoursByProject.map((proj) => proj.name);
-  pieData = this.hoursByProject.map((proj) => proj.hoursSpent);
-  pieColors = this.configureDefaultColours(this.pieData);
+    this.balanceByAccountChartData = {
+      labels: pieLabels,
+      datasets: [
+        {
+          data: pieData,
+          backgroundColor: pieColors
+        }
+      ]
+    }
+  }
 
+  configureStats() {
+
+    let iconsArray = this.configureDefaultIcons(this.accountsStats);
+    let colorArray = this.configureDefaultColours(this.accountsStats);
+
+    console.log('colorArray', iconsArray);
+
+    this.stats = this.accountsStats.map((a,idx) => {
+      return {
+        label: a.accountName,
+        value: a.balance,
+        icon: iconsArray[idx],
+        colour: colorArray[idx]
+      }
+    })
+
+  }
+
+  loadData() {
+        //get data from server
+        this.apiService.getAccountsSats()
+        .subscribe((res: any) => {
+          console.log('statsData: ', res);
+          this.accountsStats = res;
+          this.configurePie();
+          this.configureStats()
+        }, err => console.log(err));
+  }
 
   private configureDefaultColours(data: number[]): string[] {
     let customColours = []
@@ -37,63 +82,19 @@ export class DashboardComponent implements OnInit {
         return DEFAULT_COLORS[idx % DEFAULT_COLORS.length];
       });
     }
-
     return customColours;
   }
 
+  private configureDefaultIcons(data: number[]): string[] {
+    let customIcons = []
+    if (data.length) {
 
-  hoursByProjectChartDataOrg = {
-    labels: ["Payroll App","Agile Times App","Point of Sale App"],
-    datasets:[
-      
-      {data:[8,16,24],
-      backgroundColor:['#00ACAC','#2F8EE5','#6C76AF']}
-    ]
+      customIcons = data.map((element, idx) => {
+        return DEFAULT_ICONS[idx % DEFAULT_ICONS.length];
+      });
+    }
+    return customIcons;
   }
 
-  hoursByProjectChartData = {
-    labels: this.pieLabels,
-    datasets:[
-      
-      {data:this.pieData,
-      backgroundColor:this.pieColors}
-    ]
-  }
-
-  hoursByTeamChartData = {
-
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        label: 'Dev Team',
-        backgroundColor: DEFAULT_COLORS[0],
-        data: [65, 59, 80, 55, 67, 73],
-        fill:false
-      },
-      {
-        label: 'Ops Team',
-        backgroundColor: DEFAULT_COLORS[1],
-        data: [44, 63, 57, 90, 77, 70]
-      }
-    ]
-
-  }
-  constructor(public apiService: ApiService) { }
-
-  ngOnInit(): void {
-
-    this.stats = [
-      {icon:"fa fa-line-chart",label:"Assets",value:"81,132",colour:"#00ACAC"},
-      {icon:"fa fa-bar-chart",label:"Liabilities",value:"27,835",colour:"#2F8EE5"},
-      {icon:"fa fa-pie-chart",label:"Revenue",value:"7,763",colour:"#6C76AF"},
-      {icon:"fa fa-area-chart",label:"Expenses",value:"4,456",colour:"#EFA64C"},
-      // {icon:"fa fa-file-text",label:"Equity",value:"8,456",colour:"#8BA39C"}
-    ];
-  }
-
-
-  refresh(){
-    console.log('refresh');
-  }
 
 }

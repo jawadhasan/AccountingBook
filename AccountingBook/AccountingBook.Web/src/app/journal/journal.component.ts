@@ -11,7 +11,6 @@ import { MessageService } from 'primeng/api';
 export class JournalComponent implements OnInit {
 
   journalEntries: any = [];
-  includePosted:boolean = true;
 
   constructor(private router: Router, public apiService: ApiService,
     private messageService: MessageService) { }
@@ -30,7 +29,8 @@ export class JournalComponent implements OnInit {
 
   loadData() {
     //get data from server
-    this.apiService.getJournalEntries(this.includePosted).subscribe((res: any) => {
+    this.apiService.getJournalEntries()
+    .subscribe((res: any) => {
       console.log('journal entries: ', res);
       this.journalEntries = res;
     }, err => this.handleError(err));

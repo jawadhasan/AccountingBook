@@ -5,7 +5,7 @@
     <h2 class="pull-left">Dashboard</h2>
 
     <div class="right-buttons pull-right">
-      <button type="button" (click)="refresh()" class="ui-button-info" pButton label="Refresh"
+      <button type="button" (click)="loadData()" class="ui-button-info" pButton label="Refresh"
         icon="fa fa-refresh"></button>
     </div>
 
@@ -29,31 +29,12 @@
   <!-- Pie Chart -->
 <div class="ui-g">
 
-  <p-panel header="Hours By Project (pie)" class="ui-g-12 ui-md-6">
-    <p-chart type="pie" [data]="hoursByProjectChartData"></p-chart>
+  <p-panel header="Account Balance (pie)" class="ui-g-12 ui-md-6">
+    <p-chart type="pie" [data]="balanceByAccountChartData"></p-chart>
   </p-panel>
 
-  <p-panel header="Hours By Project (doughnut)" class="ui-g-12 ui-md-6">
-    <p-chart type="doughnut" [data]="hoursByProjectChartData"></p-chart>
+  <p-panel header="Account Balance (doughnut)" class="ui-g-12 ui-md-6">
+    <p-chart type="doughnut" [data]="balanceByAccountChartData"></p-chart>
   </p-panel>
-
-  <!-- <p-panel header="Hours By Project (polarArea)" class="ui-g-12 ui-md-6">
-    <p-chart type="polarArea" [data]="hoursByProjectChartData"></p-chart>
-  </p-panel> -->
-
 </div>
 
-
-<div class="ui-g">
-
-
-  <p-panel header="Hours By Team (bar)" class="ui-g-12 ui-md-6">
-    <p-chart type="bar" [data]="hoursByTeamChartData"></p-chart>
-  </p-panel>
-
-  
-  <p-panel header="Hours By Team (line)" class="ui-g-12 ui-md-6">
-    <p-chart type="line" [data]="hoursByTeamChartData"></p-chart>
-  </p-panel>
-
-</div>

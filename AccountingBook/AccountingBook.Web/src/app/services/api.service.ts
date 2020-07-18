@@ -30,13 +30,8 @@ export class ApiService {
     return this.http.get('/api/lookup/postingAccounts');
   }
 
-  getJournalEntries(includePosted){
-    if(includePosted){
-      return this.http.get('/api/journal');
-    }else{
-      return this.http.get('/api/journal/off');
-    }
-    
+  getJournalEntries(){   
+      return this.http.get('/api/journal');     
   }
 
   getJournal(id: number) {
@@ -84,5 +79,11 @@ export class ApiService {
   getIncomeStatement(){
     return this.http.get('/api/incomeStatement');
   }
+
+  //dashboard
+
+  getAccountsSats(){   
+    return this.http.get('/api/dashboard/getAccountsStats');     
+}
 
 }
