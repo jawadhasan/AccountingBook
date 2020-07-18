@@ -16,8 +16,8 @@
         <tr>
             <td>{{entry.accountCode}}</td>
             <td>{{entry.accountName}}</td>
-            <td>{{entry.debit}}</td>
-            <td>{{entry.credit}}</td>            
+            <td>{{entry.debit | number}}</td>
+            <td>{{entry.credit | number}}</td>            
            
         </tr>
     </ng-template>
@@ -26,8 +26,8 @@
         <tr>
             <td></td>
             <td></td>
-            <td>{{getSum('debit')}}</td>
-            <td>{{getSum('credit')}}</td> 
+            <td>{{getSum('debit') | number}}</td>
+            <td>{{getSum('credit') | number}}</td> 
         </tr>
     </ng-template>
 

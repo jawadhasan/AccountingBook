@@ -19,7 +19,7 @@
             </td>
             <td>{{entry.accountCode}}</td>
             <td>{{entry.accountName}}</td>
-            <td>{{entry.amount}}</td>
+            <td>{{entry.amount | number}}</td>
                      
            
         </tr>
@@ -28,7 +28,7 @@
     <ng-template pTemplate="footer" let-columns>
         <tr>
             <td colspan="3"><span class="pull-right">Sum</span></td>
-            <td>{{getSumAmount()}}</td> 
+            <td>{{getSumAmount() | number}}</td> 
         </tr>
     </ng-template>
 

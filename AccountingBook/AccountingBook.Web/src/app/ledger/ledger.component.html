@@ -10,13 +10,13 @@
         <tr>
             <!-- <th>Id</th> -->
             <th>date</th>
-            <th style="width: 20%;">
+            <th style="width: 15%;">
                 Account Code
                 <input pInputText type="text" style="width: 10vw;" (input)="dt.filter($event.target.value, 'accountCode', 'contains')">
             </th>
             <th style="width: 20%;">Account Name</th>
-            <th>JournalId</th>
-            <th>Ref</th>
+            <!-- <th>JournalId</th> -->
+            <th style="width: 20%;">Ref</th>
             <th>Debit</th>
             <th>Credit</th>          
            
@@ -26,12 +26,12 @@
     <ng-template pTemplate="body" let-entry>
         <tr>
             <td>{{entry.date | date: 'dd.MM.yyyy'}}</td>
-            <td style="width: 20%;">{{entry.accountCode}}</td>
+            <td style="width: 15%;">{{entry.accountCode}}</td>
             <td style="width: 20%;">{{entry.accountName}}</td>
-            <td>{{entry.transactionNo}}</td>
-            <td>{{entry.reference}}</td>
-            <td>{{entry.debit}}</td>
-            <td>{{entry.credit}}</td>            
+            <!-- <td>{{entry.transactionNo}}</td> -->
+            <td style="width: 20%;">{{entry.reference}}</td>
+            <td>{{entry.debit | number}}</td>
+            <td>{{entry.credit | number}}</td>            
            
         </tr>
     </ng-template>

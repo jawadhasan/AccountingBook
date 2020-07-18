@@ -35,9 +35,9 @@
                     {{rowData.accountName}}
                 </td>
                 <td>{{rowData.accountCode}}</td>
-                <td>{{rowData.debitBalance }}</td>
-                <td>{{rowData.creditBalance}}</td>
-                <td>{{rowData.balance}}</td>
+                <td>{{rowData.debitBalance | number }}</td>
+                <td>{{rowData.creditBalance | number}}</td>
+                <td>{{rowData.balance | number}}</td>
               
             </tr>
         </ng-template>
