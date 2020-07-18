@@ -24,15 +24,15 @@
     <ng-template pTemplate="footer" let-columns>
         <tr>
             <td colspan="3"><span class="pull-right">Net Income</span></td>
-            <td>{{getSumRevenue() - getSumExpense()}}</td>
+            <td>{{getSumRevenue() - getSumExpense() | number}}</td>
         </tr>
         <tr>
             <td colspan="3"><span class="pull-right">Total Revenue</span></td>
-            <td>{{getSumRevenue()}}</td>
+            <td>{{getSumRevenue() | number}}</td>
         </tr>
         <tr>
             <td colspan="3"><span class="pull-right">Total Expense</span></td>
-            <td>{{getSumExpense()}}</td>
+            <td>{{getSumExpense() | number}}</td>
         </tr>
     </ng-template>
 
