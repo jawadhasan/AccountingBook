@@ -15,12 +15,13 @@ Clone and Install dependencies:
 3. npm install
 4. NuGet Restore
 
-Run The Applicatoin:
+Debug The Applicatoin:
 
 Open two powershell windows in the AccountingBook.Web project and run following commands:
 
 >> Backend: dotnet watch run
 >> Frontend: ng serve --proxy-config proxy.config.json
+
 
 
 Solution Strcuture:
@@ -42,3 +43,15 @@ AccountingBook.Web:
 - The "src" folder inside the project is where source-code is for Angular. Angular-cli shall be used.
 
 	1. src>>ng serve (to start development server for angular part)
+
+	
+Publish and Deploy
+
+AngularApp:
+>> npm run build -prod -aot
+
+.NET Core:
+>>dotnet publish AccountingBook.Web.csproj -c debug -r win-x64 --self-contained true
+or
+>>dotnet publish -c Debug -r win10-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
+
