@@ -26,16 +26,16 @@ export class ApiService {
   }
 
 
-  getPostingAccounts(){
+  getPostingAccounts() {
     return this.http.get('/api/lookup/postingAccounts');
   }
 
-  getJournalEntries(){   
-      return this.http.get('/api/journal');     
+  getJournalEntries() {
+    return this.http.get('/api/journal');
   }
 
   getJournal(id: number) {
-    return this.http.get('/api/journal/'+id);    
+    return this.http.get('/api/journal/' + id);
   }
 
   saveJournal(journal) {
@@ -44,46 +44,46 @@ export class ApiService {
 
 
   deleteJournal(id) {
-    return this.http.delete('/api/journal/'+id);
+    return this.http.delete('/api/journal/' + id);
   }
-  
-  
+
+
   postJournal(id) {
-    return this.http.post('/api/journal/postJournal/'+id,null);
+    return this.http.post('/api/journal/postJournal/' + id, null);
   }
 
   getCoa() {
-    return this.http.get('/api/accounts');    
+    return this.http.get('/api/accounts');
   }
 
 
 
   //Ledger
 
-  getLedgerEntries(){
+  getLedgerEntries() {
     return this.http.get('/api/ledger');
   }
 
 
   //Reports
-  
-  getTrialBalance(){
+
+  getTrialBalance() {
     return this.http.get('/api/trialBalance');
   }
 
-  
-  getBalanceSheet(){
+
+  getBalanceSheet() {
     return this.http.get('/api/balanceSheet');
   }
 
-  getIncomeStatement(){
+  getIncomeStatement() {
     return this.http.get('/api/incomeStatement');
   }
 
   //dashboard
 
-  getAccountsSats(){   
-    return this.http.get('/api/dashboard/getAccountsStats');     
-}
+  getAccountsSats() {
+    return this.http.get('/api/dashboard/getAccountsStats');
+  }
 
 }

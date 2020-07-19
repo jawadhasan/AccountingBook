@@ -1,6 +1,5 @@
 <div class="component-container ui-g">
 
-
   <div class="header ui-g-12">
     <h2 class="pull-left">Dashboard</h2>
 
@@ -8,13 +7,11 @@
       <button type="button" (click)="loadData()" class="ui-button-info" pButton label="Refresh"
         icon="fa fa-refresh"></button>
     </div>
-
-
     <div class="ui-g-12 ui-g-nopad">
       <hr>
     </div>
   </div>
-  
+
 </div>
 
 
@@ -33,8 +30,10 @@
     <p-chart type="pie" [data]="balanceByAccountChartData"></p-chart>
   </p-panel>
 
+  <!-- Doughnut Chart -->
   <p-panel header="Account Balance (doughnut)" class="ui-g-12 ui-md-6">
     <p-chart type="doughnut" [data]="balanceByAccountChartData"></p-chart>
   </p-panel>
+  
 </div>
 

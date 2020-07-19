@@ -35,7 +35,6 @@ namespace AccountingBook.Web.Controllers
           Balance = l.Sum(d => d.Balance)
         });
 
-
       return Ok(test);
     }
   }

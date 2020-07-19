@@ -17,19 +17,46 @@ const DEFAULT_ICONS = ['fa fa-line-chart', 'fa fa-bar-chart',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  stats: any = [];
-  accountsStats: any;
-  balanceByAccountChartData: any;
- 
+  stats: any = []; //for statistic component  
+  accountsStats: any;// data form server
+  balanceByAccountChartData: any; //pie, doughtnut chart data
+
   constructor(public apiService: ApiService) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     //get data from server
-   this.loadData();
+    this.loadData();
   }
 
- 
-  configurePie() {
+  loadData() {
+    //get data from server
+    this.apiService.getAccountsSats()
+      .subscribe((res: any) => {
+        console.log('statsData: ', res);
+        this.accountsStats = res;
+        this.setupStatsData() //stats tiles
+        this.setupChartData();  //pie, doughnut charts    
+      }, err => console.log(err));
+  }
+
+  setupStatsData() {
+
+    let iconsArray = this.configureDefaultIcons(this.accountsStats);
+    let colorArray = this.configureDefaultColours(this.accountsStats);
+
+    console.log('colorArray', iconsArray);
+
+    this.stats = this.accountsStats.map((a, idx) => {
+      return {
+        label: a.accountName,
+        value: a.balance,
+        icon: iconsArray[idx],
+        colour: colorArray[idx]
+      }
+    })
+
+  }
+  setupChartData() {
     let pieLabels = this.accountsStats.map((account) => account.accountName);
     let pieData = this.accountsStats.map((account) => account.balance);
     let pieColors = this.configureDefaultColours(pieData);
@@ -45,35 +72,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  configureStats() {
-
-    let iconsArray = this.configureDefaultIcons(this.accountsStats);
-    let colorArray = this.configureDefaultColours(this.accountsStats);
-
-    console.log('colorArray', iconsArray);
-
-    this.stats = this.accountsStats.map((a,idx) => {
-      return {
-        label: a.accountName,
-        value: a.balance,
-        icon: iconsArray[idx],
-        colour: colorArray[idx]
-      }
-    })
-
-  }
-
-  loadData() {
-        //get data from server
-        this.apiService.getAccountsSats()
-        .subscribe((res: any) => {
-          console.log('statsData: ', res);
-          this.accountsStats = res;
-          this.configurePie();
-          this.configureStats()
-        }, err => console.log(err));
-  }
-
+  //Utitlity methods
   private configureDefaultColours(data: number[]): string[] {
     let customColours = []
     if (data.length) {
@@ -84,7 +83,6 @@ export class DashboardComponent implements OnInit {
     }
     return customColours;
   }
-
   private configureDefaultIcons(data: number[]): string[] {
     let customIcons = []
     if (data.length) {
@@ -95,6 +93,4 @@ export class DashboardComponent implements OnInit {
     }
     return customIcons;
   }
-
-
 }
