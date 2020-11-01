@@ -1,3 +1,13 @@
+
+Update 01.11.2020
+
+- Web application routing is adjusted for SPA routing.
+- Update ConnectionString if needed (AccountingBook.Web).
+- Chart.js script reference is removed from angular.json file.
+- If you downloaded the code you might need to setup the database. You can run migration using ef command (update-database).
+
+===================================================================================
+
 # AccountingApp
 
 Install following software/SDKs on your development machine:
@@ -36,13 +46,13 @@ AccountingBoiok.Data
 
 - EF core is used along with PostgreSQL.
 
+- Run EF migrations (update-database).
+
 AccountingBook.Web:
 
 - This project contains the front-end and backend code for web part.
 
 - The "src" folder inside the project is where source-code is for Angular. Angular-cli shall be used.
-
-	1. src>>ng serve (to start development server for angular part)
 
 	
 Publish and Deploy
