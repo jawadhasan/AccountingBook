@@ -1,0 +1,12 @@
+#kubectl apply -f accounting-db.service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: accounting-db #this will become the DNS name in the cluster
+spec:
+  type:  ClusterIP
+  selector:
+    app: accounting-db #pod selector
+  ports:   
+  - port: 5432 #service listen port
+    targetPort: 5432 #target port on pod

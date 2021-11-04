@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounting-db
+spec:
+  selector:
+    matchLabels:
+      app: accounting-db #this connect deployment with pod spec
+  template:
+    metadata:
+      labels:
+        app: accounting-db #every pod created with this deployment, will have this label, and that how service will target pod for network traffic
+    spec:     
+      containers:    
+      - name: accounting-db-ctr
+        image: jawadhasanshani/accountingbookdb:v1
+        env:
+        - name: POSTGRES_PASSWORD
+          value: sasa

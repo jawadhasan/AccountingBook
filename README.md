@@ -1,4 +1,10 @@
+Update 04.11.2021
 
+- Docker support and Docker-compose added
+- Deployment to Kubernetes added
+https://hexquote.com/deploying-a-web-application-to-kubernetes-basics/
+
+=============================================================
 Update 01.11.2020
 
 - Web application routing is adjusted for SPA routing.
