@@ -1,24 +1,25 @@
 
 
-# Deployed Application (as AWS Serverless Lambda)
+## Deployed Application (as AWS Serverless Lambda)
 
 https://accounting.awsclouddemos.com/
 
 =============================================================
-# Update 07.04.2022: AccountingBook application update to ASP .NET Core 6
+## Update 07.04.2022: AccountingBook application update to ASP .NET Core 6
 https://hexquote.com/migrating-asp-net-core-3-1-web-application-to-asp-net-core-6/
 
-# Update 24.05.2022: Deploy AccountingBook application to AWS Serverless Lambda
+## Update 24.05.2022: Deploy AccountingBook application to AWS Serverless Lambda
+
 https://hexquote.com/migrate-on-prem-web-app-net-core-angular-and-postgres-to-aws-serverless/
 ============================================================
-Update 04.11.2021
+## Update 04.11.2021
 
 - Docker support and Docker-compose added
 - Deployment to Kubernetes added
 https://hexquote.com/deploying-a-web-application-to-kubernetes-basics/
 
 =============================================================
-Update 01.11.2020
+## Update 01.11.2020
 
 - Web application routing is adjusted for SPA routing.
 - Update ConnectionString if needed (AccountingBook.Web).
