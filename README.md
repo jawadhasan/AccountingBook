@@ -51,7 +51,7 @@ Open two powershell windows in the AccountingBook.Web project and run following 
 
 This project contains all the domain-model code. This project has no dependency on any other project.    
 
-### AccountingBoiok.Data
+### AccountingBook.Data
 
 This project contains code related to data access concerns. It also reference AccountingBook.Core project as dependency.    
 
