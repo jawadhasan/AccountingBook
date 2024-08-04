@@ -1,25 +1,19 @@
+#Build Accounting Application Book
 
+This repo contains source code for build Accounting application book.
 
-## Deployed Application (as AWS Serverless Lambda)
+[Book] (https://amzn.eu/d/bAZcdPj)   
 
-https://accounting.awsclouddemos.com/
+## Updated Demos
 
-=============================================================
-## Update 07.04.2022: AccountingBook application update to ASP .NET Core 6
-https://hexquote.com/migrating-asp-net-core-3-1-web-application-to-asp-net-core-6/
+[update to ASP .NET Core 6](https://hexquote.com/migrating-asp-net-core-3-1-web-application-to-asp-net-core-6/)    
+[Deploy to AWS Serverless Lambda](https://hexquote.com/migrate-on-prem-web-app-net-core-angular-and-postgres-to-aws-serverless/)    
+[Docker and Kubernetes](https://hexquote.com/deploying-a-web-application-to-kubernetes-basics/)    
 
-==================================================================================
-## Update 24.05.2022: Deploy AccountingBook application to AWS Serverless Lambda
+## Deployed Application
 
-https://hexquote.com/migrate-on-prem-web-app-net-core-angular-and-postgres-to-aws-serverless/
-============================================================
-## Update 04.11.2021
+[Deployed Application (as AWS Serverless Lambda)] (https://accounting.awsclouddemos.com/)    
 
-- Docker support and Docker-compose added
-- Deployment to Kubernetes added
-https://hexquote.com/deploying-a-web-application-to-kubernetes-basics/
-
-=============================================================
 ## Update 01.11.2020
 
 - Web application routing is adjusted for SPA routing.
@@ -27,62 +21,55 @@ https://hexquote.com/deploying-a-web-application-to-kubernetes-basics/
 - Chart.js script reference is removed from angular.json file.
 - If you downloaded the code you might need to setup the database. You can run migration using ef command (update-database).
 
-===================================================================================
-
 # AccountingApp
 
 Install following software/SDKs on your development machine:
 
-Software(s) / SDK:
-Node: V10.16.0
-.NET: 3.0.100
-Angular-cli: 9.1.1
+### Software(s) / SDK
+Node: V10.16.0    
+.NET: 3.0.100    
+Angular-cli: 9.1.1    
 
+### Clone and Install dependencies
 
-Clone and Install dependencies
+1. Clone the Repository    
+2. cd to directory of AccountingBook.Web project    
+3. npm install    
+4. NuGet Restore    
 
-1. Clone the Repository
-2. cd to directory of AccountingBook.Web project
-3. npm install
-4. NuGet Restore
-
-Debug The Applicatoin:
+### Debug The Applicatoin
 
 Open two powershell windows in the AccountingBook.Web project and run following commands:
 
->> Backend: dotnet watch run
->> Frontend: ng serve --proxy-config proxy.config.json
+- Backend: `dotnet watch run`
+- Frontend: `ng serve --proxy-config proxy.config.json`
 
 
+## Solution Strcuture
 
-Solution Strcuture:
+### AccountingBook.Core
 
-AccountingBook.Core
+This project contains all the domain-model code. This project has no dependency on any other project.    
 
-- This project contains all the domain-model code. This project has no dependency on any other project.
+### AccountingBoiok.Data
 
-AccountingBoiok.Data
+This project contains code related to data access concerns. It also reference AccountingBook.Core project as dependency.    
 
-- This project contains code related to data access concerns. It also reference AccountingBook.Core project as dependency.
+- EF core is used along with PostgreSQL.   
+- Run EF migrations (update-database).    
 
-- EF core is used along with PostgreSQL.
-
-- Run EF migrations (update-database).
-
-AccountingBook.Web:
+### AccountingBook.Web
 
 - This project contains the front-end and backend code for web part.
-
 - The "src" folder inside the project is where source-code is for Angular. Angular-cli shall be used.
-
 	
-Publish and Deploy
+###Publish and Deploy
 
-AngularApp:
->> npm run build -prod -aot
+AngularApp:    
+`npm run build -prod -aot`
 
-.NET Core:
->>dotnet publish AccountingBook.Web.csproj -c debug -r win-x64 --self-contained true
-or
->>dotnet publish -c Debug -r win10-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
+.NET Core:    
+`dotnet publish AccountingBook.Web.csproj -c debug -r win-x64 --self-contained true`
+or    
+`dotnet publish -c Debug -r win10-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true`
 
