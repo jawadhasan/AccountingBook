@@ -1,12 +1,12 @@
-#Build Accounting Application Book
+# Build Accounting Application Book
 
 This repo contains source code for build Accounting application book.
 
-[Book] (https://amzn.eu/d/bAZcdPj)   
+[Book](https://amzn.eu/d/bAZcdPj/)   
 
 ## Updated Demos
 
-[update to ASP .NET Core 6](https://hexquote.com/migrating-asp-net-core-3-1-web-application-to-asp-net-core-6/)    
+[Updated to ASP .NET Core 6](https://hexquote.com/migrating-asp-net-core-3-1-web-application-to-asp-net-core-6/)    
 [Deploy to AWS Serverless Lambda](https://hexquote.com/migrate-on-prem-web-app-net-core-angular-and-postgres-to-aws-serverless/)    
 [Docker and Kubernetes](https://hexquote.com/deploying-a-web-application-to-kubernetes-basics/)    
 
